@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+$EDITOR $(find $HOME/.local/ $HOME/.config $HOME/repos -type f | fzf)

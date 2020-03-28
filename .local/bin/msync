@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+loudsync() {
+	notify-send "Syncing Mail..."
+	mbsync -a
+	notify-send "Mail Synced"
+	ref -b
+}
+
+quitesync() {
+	mbsync -a
+	ref -b
+}
+
+case "$1" in
+	-q) quitesync ;;
+	*) loudsync ;;
+esac

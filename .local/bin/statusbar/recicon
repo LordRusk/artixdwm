@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Show the current recording icon state
+cat /tmp/recordingicon

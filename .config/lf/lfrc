@@ -1,0 +1,89 @@
+# Luke's lf settings
+
+# Basic vars
+set shell sh
+set previewer ~/.config/lf/scope
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+set color256
+set hidden true
+#set icons true
+
+# cmds/functions
+cmd open ${{
+    case $(file --mime-type $f -b) in
+    	text/troff) man ./ $f;;
+        text/*) $EDITOR $fx;;
+	image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
+	image/*) rotdir $f | setsid sxiv -aio 2>/dev/null | lf-select & ;;
+	audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
+	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
+	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
+	archive/tar) tar --extract -f $f > /dev/null 2>$1 & ;;
+        *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
+    esac
+}}
+
+cmd delete ${{
+	set -f
+	clear; printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf $fx
+}}
+
+cmd mkfile ${{
+	set -f
+	clear; echo "File Name: "
+	read ans
+	$EDITOR $ans
+}}
+
+cmd mkdir ${{
+	set -f
+	clear; echo "Directory Name: "
+	read ans
+	mkdir $ans
+}}
+
+cmd copyto ${{
+	set -f
+	clear; echo "Copy to where?"
+	dest="$(find $HOME -type d | fzf)" &&
+	cp -ivr $fx $dest &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+cmd moveto ${{
+	set -f
+	clear; echo "Move to where?"
+	dest="$(find $HOME -type d | fzf)" &&
+	mv $fx $dest &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+cmd bulkrename ${{
+	vidir
+}}
+
+cmd executable ${{
+	chmod +x $f
+}}
+
+cmd unexecutable ${{
+	chmod -x $f
+}}
+
+# Bindings
+map v mkfile
+map g top
+map d delete
+map C copyto
+map M moveto
+map m mkdir
+map b bulkrename
+map <enter> shell
+map x executable
+map X unexecutable
+map o &mimeopen "$f"
+map O $mimeopen --ask "$f"

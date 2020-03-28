@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+date '+%Y %b %d (%a) %I:%M%p'

@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# This file runs when a DM logs you into a graphical session.
+# If you use startx/xinit like a Chad, this file will also be sourced.
+
+picom & # Start picom for transparency
+dunst & # Start dunst for notifications
+unclutter & # Start unclutter to remove mouse when inactive
+sxhkd -m 1 & # Start Simple X HotKey Daemon for global hotkeys
+setbg -p & # Set wallpaper using xwallpaper
+remaps & # Switch caps and esc key among other things
+$STATUSBAR & # Starts the statusbar specified in .profile

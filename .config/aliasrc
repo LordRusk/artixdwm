@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Arch aliases
+alias p="sudo pacman"
+
+# Void aliases
+alias xi="sudo xbps-install"
+alias xr="sudo xbps-remove"
+alias xq="sudo xbps-query"
+
+# Global workflow aliases
+alias v="nvim"
+alias sv="sudo nvim"
+alias slf="sudo lf"
+alias g="git"
+
+# Script aliases
+alias scd=". scd"
+
+# Functional aliases
+alias c="clear"
+alias ls="ls -a -nH --color=auto --group-directories-first"
+alias grep="grep --color=auto"

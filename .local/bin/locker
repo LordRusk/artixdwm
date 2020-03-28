@@ -1,0 +1,27 @@
+#!/usr/bin/env dash
+
+# This is a simple locker
+# script for making slock
+# look good with nothing
+# more then a patch and
+# and an external program
+
+# Syntax:
+# $1 = title
+# $2 = text
+# $3 = figletfont
+
+# Kill screenkeys before locking
+killall screenkey
+
+# Variables
+dtitle="UNIX Is Very Simple"
+dtext=""
+dfigletfont="~/.local/share/kban.flf"
+
+# Text manipulation
+title="$(echo "${1:-$dtitle}" | figlet -f ~/.local/src/figlet-fonts/contributed/kban.flf )"
+text="$(echo "${2:-$dtext}" | figlet)"
+
+# Lock the screen
+slock -m "$(echo "${title}\n${text}")"

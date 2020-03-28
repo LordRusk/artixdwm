@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Simple script that tells outputs how much
+# unread mail I have when using mutt-wizard.
+
+# Here is where you set variables like they
+# account name, mailbox emoji. These are
+# needed by the script.
+accname="rusk"
+mailemoji="📫"
+
+# Update the mailbox if $1 is -u
+[ "$1" = "-u" ] && mailsync > /dev/null 2>&1
+
+# Get number of new mails
+newmailnum="$(echo "$(du -a ~/.local/share/mail/$accname/INBOX/new/* 2>/dev/null | sed -n '$=')")"
+
+# Show new mail
+[ -z "$newmailnum" ] && echo "$mailemoji" || echo "$mailemoji $newmailnum";

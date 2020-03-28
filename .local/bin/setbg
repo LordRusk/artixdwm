@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+# Simple wallpaper script that
+# supports farbfeld and pywal.
+
+# Syntax:
+# setbg (-p|-f) [file1]
+# ----------------------------
+# -p means use pywal.
+# ----------------------------
+# -f=(--bg-center|--bg-fill|--bg-max)
+# specifies what feh wallpaper
+# settings to use. Alternatively
+# you can use -f=--geomatry for
+# custom settings
+# ----------------------------
+
+# Dependencies:
+# [feh|awk|sed]
+
+# Optional:
+# [imlib2|farbfeld|pywal]
+
+# Error
+feherror() { echo "Syntax Error...Exiting..."; }
+pywalerror() { echo "Unsupported file format or farbfeld compression algorithm...Exiting..."; }
+
+# Defaults
+wallpaper="$HOME/.local/wg/neon-city.jpg"
+fehsetting="--bg-fill"
+pywal="n"
+
+# Paarser
+if [  "$(echo "$1" | awk '{print substr($1,0,3)}')" = "-f=" ]; then
+	fehsetting="$(echo "$1" | sed 's/^...//')"
+	if [ "$(echo "$2" | awk '{print substr($1,0,2)}')" = "-p" ]; then
+		pywal="y"
+		wallpaper="${3:-$wallpaper}"
+	else wallpaper="${2:-$wallpaper}";fi
+elif [ "$(echo "$1" | awk '{print substr($1,0,2)}')" = "-p" ]; then
+	pywal="y"
+	if [  "$(echo "$2" | awk '{print substr($1,0,3)}')" = "-f=" ]; then
+		fehsetting="$(echo "$2" | sed 's/^...//')"
+		wallpaper="${3:-$wallpaper}"
+	else wallpaper="${2:-$wallpaper}";fi
+else wallpaper="${1:-$wallpaper}";fi
+
+# Set the background
+feh "$fehsetting" "$wallpaper" >/dev/null || feherror &
+
+# Use pywal if specified and convert
+# from farbfeld to jpg if necessary
+if [ "$pywal" = "y" ]
+	then if [ "$(echo "$wallpaper" | grep .ff)" = "$wallpaper" ]
+		then ff2jpg < $wallpaper > /tmp/wallpaper.jpg
+		wal -i /tmp/wallpaper.jpg
+		rm /tmp/wallpaper.jpg
+		else wal -i $wallpaper
+	fi >/dev/null || pywalerror
+fi >/dev/null || pywalerror

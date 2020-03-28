@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+# A helpful script to update any dwmblocks module with
+# an update signal not equal to 0.
+
+# Please give a path to the blocks.h file
+path="$HOME/.local/src/dwmblocks/blocks.h"
+
+# Get all active blocks in an easily parcable format
+activeblocks="$(grep '{""' $path | sed 's/\/\*.*//g;/^$/d;s/"//g;s/,//g;s/{//g;s/}//g;s/ //g')"
+
+# Prompt the user to select a module
+mod="$(echo "$activeblocks" | awk '{print $1}' | dmenu -p "Which dwmblocks module would you like to refresh?")"
+
+# Refresh that module
+pkill -RTMIN+"$(echo "$activeblocks" | grep $mod | awk '{print $3}')" $STATUSBAR

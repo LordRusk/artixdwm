@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+chdir $(find $HOME -type d | fzf)

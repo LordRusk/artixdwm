@@ -51,10 +51,11 @@ super + Scroll_Lock
 super + Insert
 	showclip
 super + shift + x
-	prompt 'Shutdown computer?' 'sudo -A shutdown -h now'
+	[ \"$(printf \"No\\nYes\" | dmenu -i -nb darkred -sb red -sf white -nf gray -p \"Shutdown computer?\")\" = Yes ] && sudo -A shutdown -h now
 super + shift + BackSpace
-	prompt 'Reboot computer?' 'sudo -A reboot'
+	[ \"$(printf \"No\\nYes\" | dmenu -i -nb darkred -sb red -sf white -nf gray -p \"Reboot computer?\")\" = Yes ] && sudo -A reboot
 super + shift + Escape
+	[ \"$(printf \"No\\nYes\" | dmenu -i -nb darkred -sb red -sf white -nf gray -p \"Leave Corg?\")\" = Yes ] && sudo killall Xorg
 	prompt 'Leave Xorg?' 'killall Xorg'
 super + shift + l
 	$LOCKER

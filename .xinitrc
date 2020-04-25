@@ -12,10 +12,4 @@
 
 # Your default WM is determined in your `~/.profile` on login.  Here we
 # run the proper command to run when the graphical environment starts.
-
-case "$WM" in
-	dwm) while :; do
-		ssh-agent dwm || break
-		done ;;
-	*) exec $WM ;;
-esac
+[ "$WM" = "dwm" ] && (ssh-agent dwm || break ) || exec $WM

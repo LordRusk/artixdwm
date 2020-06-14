@@ -15,4 +15,4 @@ case $BLOCK_BUTTON in
 esac
 
 printf "Public: $(curl -s ifconfig.me)\nPrivate: $(hostname -i)\n\n$(ifconfig)\n\n$(ip address)" > $infofile
-grep Public $infofile
+grep Public $infofile | cut  -d ' ' -f 2

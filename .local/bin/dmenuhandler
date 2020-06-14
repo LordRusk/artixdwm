@@ -15,5 +15,4 @@ case "$(printf "copy url\\nmpv\\nmpv (loop)\\ndownload\\nyoutube-dl\\nfeh\\nbrow
 	"mpv (float)") setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%s) --geometry=+0-0 --autofit=30%  --title="mpvfloat" "$1" >/dev/null 2>&1 & ;;
 	"rss") rssadd "$1" ;;
 	"Transmission-Daemon") transadd "$1" ;;
-	"Rss Add") rssadd "$1" ;;
 esac

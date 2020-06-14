@@ -49,7 +49,7 @@ while getopts "w:h:m:pN" parm; do case $parm in
 esac done
 
 # Defaults.
-[ -z "$wallpaper" ] && wallpaper="$HOME/.local/wg/look/juzo-esk.jpg"
+[ -z "$wallpaper" ] && wallpaper="$HOME/.local/wg/nature/oregon-coast.jpg"
 [ -z "$hsetting" ] && hsetting="-cover"
 [ -z "$pywal" ] && pywal="n"
 [ -z "$notification" ] && notification="y"

@@ -7,7 +7,7 @@
 ifinstalled dwmblocks
 
 # Please give a path to the blocks.h file
-path="$HOME/.local/src/dwmblocks-original/blocks.h"
+path="$HOME/.local/src/dwmblocks/blocks.h"
 
 # Get all active blocks in an easily parcable format
 activeblocks="$(grep '{""' $path | sed 's/\/\*.*//g;/^$/d;s/"//g;s/,//g;s/{//g;s/}//g;s/ //g')"

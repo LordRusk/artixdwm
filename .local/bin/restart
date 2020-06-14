@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Simple script to restart
+# any running process
+
+[ -z "$1" ] && pid="$(ps xw | awk '{print $5}' | dmenu -l 30)" || pid="$1"
+pkill $pid && setsid $pid

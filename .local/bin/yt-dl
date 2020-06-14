@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# General youtube-dl downloader script
+# $1 assumed to be the link to download.
+
+# Give a dmenu menu to ask the user how
+# they would like to download the video.
+dlformat="$(printf "Video+Audio\\nVideo\\nAudio" | dmenu)"
+
+# Ask the user for a directory to download
+# the video to, and if it doesn't exit, ask
+# them if they want to create it.
+mp="$(find /mnt $HOME -type d | dmenu -i -p "Where would you like to download to?.")"
+[ -z "$mp" ] && exit 1
+if [ ! -d "$mp" ]; then
+	mkdiryn=$(printf "No\\nYes" | dmenu -i -p "$mp does not exist. Create it?")
+	[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
+fi
+
+# Download the video
+cd $mp
+[ "$dlformat" = "Video+Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+[ "$dlformat" = "Video" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl -x -f bestvideo/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+[ "$dlformat" = "Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl -x -f bestaudio/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+

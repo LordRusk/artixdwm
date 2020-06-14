@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
+# Simple script that sends a notification
+# when a torrent is finished downloading.
 notify-send "✔ Transmission-daemon $TR_TORRENT_NAME has completely downloaded"

@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-chdir $(find $HOME -type d | fzf)
+# Give the user a fzf menu of specific needed
+# directories and cd's there once picked.
+chdir "$(find /mnt $HOME -type d | fzf)"

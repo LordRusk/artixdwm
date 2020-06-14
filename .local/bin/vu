@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # This is a wrapper for vifm to allow ueberzug images.
 

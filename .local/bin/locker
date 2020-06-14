@@ -11,8 +11,8 @@
 # $2 = text
 # $3 = figletfont
 
-# Kill screenkeys before locking
-killall screenkey
+# If screenkey is running kill it.
+pgrep screenkey >/dev/null 2>&1 && pkill screenkey
 
 # Variables
 dtitle="UNIX Is Very Simple"
@@ -20,8 +20,11 @@ dtext=""
 dfigletfont="~/.local/share/kban.flf"
 
 # Text manipulation
-title="$(echo "${1:-$dtitle}" | figlet -f ~/.local/src/figlet-fonts/contributed/kban.flf )"
-text="$(echo "${2:-$dtext}" | figlet)"
+title="$(printf "${1:-$dtitle}" | figlet -f ~/.local/share/kban.flf )"
+text="$(printf "${2:-$dtext}")"
 
 # Lock the screen
-slock -m "$(echo "${title}\n${text}")"
+slock -m "$(printf "${title}\n${text}")"
+
+# settings n stuff
+remaps &

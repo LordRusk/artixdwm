@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# Simple slideshow
+# wrapper for setbg
+
+# Option i is intervel in seconds
+# option p is the wallpaper directory
+# Option l is a list of wallpapers rather then a directory. This option will trump -p
+
+# Parser
+while getopts "i:p:l:" parm; do case $parm in
+	i) intervel="$OPTARG" ;;
+	p) papedir="$OPTARG" ;;
+	l) list="$OPTARG" ;;
+	*) printf "Invalid option: -%s\\n" && exit ;;
+esac done
+
+# Defaults
+[ -z "$intervel" ] && intervel="180"
+[ -z "$papedir" ] && papedir="/home/rusk/.local/wg/nature/"
+
+# Slideshow
+while true; do
+	[ -z "$list" ] || setbg -N -w "$(echo "$list" | shuf -n 1)" && setbg -N -w "$papedir$(ls $papedir | shuf -n 1)"
+	sleep $intervel
+done

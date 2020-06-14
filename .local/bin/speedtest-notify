@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Simple script to get up/down speed.
+
+# Dependencies:
+# [speedtest-cli]
+
+# Check if connected to internet
+# and if so, exit.
+[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && notify-send "Not Connected To Internet" && exit
+
+# Test the speed and notify.
+notify-send "Starting Speed Test..."
+notify-send "$(speedtest-cli | grep "Mbit")"

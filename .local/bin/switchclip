@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Simple script to switch contents
+# of clipboard and primary.
+
+# Assign each selection to a variable.
+oldprim="$(xclip -o -selection primary)"
+oldclip="$(xclip -o -selection clipboard)"
+
+# Switch Selections.
+echo "$oldprim" | xclip -i -selection clipboard
+echo "$oldclip" | xclip -i -selection primary
+
+# Show the new contents of the selections.
+showclip

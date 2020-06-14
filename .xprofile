@@ -6,7 +6,7 @@
 picom & # Start picom for transparency
 dunst & # Start dunst for notifications
 unclutter & # Start unclutter to remove mouse when inactive
-sxhkd -m 1 & # Start Simple X HotKey Daemon for global hotkeys
-setbg -p & # Set wallpaper using xwallpaper
+setbg -N -w ~/.local/wg/abstract/geometric-tree.jpg & # Set wallpaper using my hsetroot wrapper
 remaps & # Switch caps and esc key among other things
+crond & # Scron used for cron jobs
 $STATUSBAR & # Starts the statusbar specified in .profile

@@ -1,60 +1,71 @@
 #!/usr/bin/env sh
 
-# Simple wallpaper script that
-# supports farbfeld and pywal.
+# Simple wrapper for
+# hsetroot that supports
+# pywal, and dwmc xrgb.
 
 # Syntax:
-# setbg (-p|-f) [file1]
+# setbg (-w|-h|-p|-N)
+# ----------------------------
+# -w [path/to/wallpaper]
+# specifies a wallpaper other
+# then the default defind in
+# this script.
+# ----------------------------
+# -h (-center|-fill|-tile|etc...)
+# specifies what hsetroot
+# settings to use.
+# ----------------------------
+# -m (-tint|-sharpen|-flip[vhd]|etc...)
+# specifies the manipulations to use
+# on the image. MUST BE IN QUOTES!
 # ----------------------------
 # -p means use pywal.
 # ----------------------------
-# -f=(--bg-center|--bg-fill|--bg-max)
-# specifies what feh wallpaper
-# settings to use. Alternatively
-# you can use -f=--geomatry for
-# custom settings
+# -N means don't send a notification
 # ----------------------------
+# Optional functionality to refresh
+# dwm with dwmc and the xrdb patch
+# automatically.
 
 # Dependencies:
-# [feh|awk|sed]
+# [hsetroot|awk|sed]
 
 # Optional:
-# [imlib2|farbfeld|pywal]
+# [imlib2|pywal|dwmc]
 
-# Error
+# Error codes.
 feherror() { echo "Syntax Error...Exiting..."; }
 pywalerror() { echo "Unsupported file format or farbfeld compression algorithm...Exiting..."; }
 
-# Defaults
-wallpaper="$HOME/.local/wg/neon-city.jpg"
-fehsetting="--bg-fill"
-pywal="n"
+# Parser
+while getopts "w:h:m:pN" parm; do case $parm in
+	w) wallpaper="$OPTARG" ;;
+	h) hsetting="$OPTARG" ;;
+	m) manipulate="$OPTARG" ;;
+	p) pywal="y" ;;
+	N) notification="n" ;;
+	*) printf "Invalid option: -%s\\n" && exit ;;
+esac done
 
-# Paarser
-if [  "$(echo "$1" | awk '{print substr($1,0,3)}')" = "-f=" ]; then
-	fehsetting="$(echo "$1" | sed 's/^...//')"
-	if [ "$(echo "$2" | awk '{print substr($1,0,2)}')" = "-p" ]; then
-		pywal="y"
-		wallpaper="${3:-$wallpaper}"
-	else wallpaper="${2:-$wallpaper}";fi
-elif [ "$(echo "$1" | awk '{print substr($1,0,2)}')" = "-p" ]; then
-	pywal="y"
-	if [  "$(echo "$2" | awk '{print substr($1,0,3)}')" = "-f=" ]; then
-		fehsetting="$(echo "$2" | sed 's/^...//')"
-		wallpaper="${3:-$wallpaper}"
-	else wallpaper="${2:-$wallpaper}";fi
-else wallpaper="${1:-$wallpaper}";fi
+# Defaults.
+[ -z "$wallpaper" ] && wallpaper="$HOME/.local/wg/look/juzo-esk.jpg"
+[ -z "$hsetting" ] && hsetting="-cover"
+[ -z "$pywal" ] && pywal="n"
+[ -z "$notification" ] && notification="y"
 
 # Set the background
-feh "$fehsetting" "$wallpaper" >/dev/null || feherror &
+hsetroot ${manipulate} $hsetting $wallpaper || feherror
+[ "$notification" = "y" ] && notify-send -i $wallpaper "Wallpaper Set"
 
 # Use pywal if specified and convert
-# from farbfeld to jpg if necessary
-if [ "$pywal" = "y" ]
-	then if [ "$(echo "$wallpaper" | grep .ff)" = "$wallpaper" ]
-		then ff2jpg < $wallpaper > /tmp/wallpaper.jpg
-		wal -i /tmp/wallpaper.jpg
-		rm /tmp/wallpaper.jpg
-		else wal -i $wallpaper
-	fi >/dev/null || pywalerror
-fi >/dev/null || pywalerror
+# from farbfeld to temp jpg if necessary.
+[ "$pywal" = "y" ] && {
+	[ -z $(echo "$wallpaper" | grep -o *.ff) ] || ff2jpg < $wallpaper > /tmp/wallpaper.jpg && wallpaper="/tmp/wallpaper.jpg"
+	wal -i "$wallpaper" >/dev/null 2>&1
+	rm /tmp/wallpaper.jpg >/dev/null 2>&1
+}
+
+# Refresh dwm to use new colors with
+# dwmc and rxdb.
+ifinstalled dwmc >/dev/null 2>&1 && dwmc xrdb >/dev/null 2>&1

@@ -1,0 +1,23 @@
+### THIS IS A PLACE HOLDER FILE ###
+### IF NOT IN /etc/crontab MOVE IT THERE ###
+
+# field #   meaning        allowed values
+# -------   ------------   --------------
+#    1      minute         0-59
+#    2      hour           0-23
+#    3      day of month   1-31
+#    4      month          1-12 (or names, see below)
+#    5      day of week    0-7 (0 or 7 is Sun, or use names)
+
+### STATUS BAR MODULES ###
+# Update mail and refresh the statusbar.
+*/30 * * * * mailsync; kill -$((34+12)) $(pidof dwmblocks)
+
+# Check for new packages every 10 minutes
+0,10,20,30,40,50  * * * * checkup
+
+# Check if battery is below 25% and sends notifcation if so.
+* * * * * cronbat
+
+# Update the time every minute
+* * * * * kill -$((34+1)) $(pidof dwmblocks)

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Simple ip module
+
+[ $(cat /sys/class/net/w*/operstate) = "down" ] && exit
+
+infofile="/home/$USER/.local/share/ipinfo"
+
+case $BLOCK_BUTTON in
+	1) notify-send "$(head -n2 $infofile)" ;;
+	2) notify-send "ip module" "\-Left click shows you public and private ip addresses
+\- Right click opens a ip info file in less with tons of useful info" ;;
+	3) setsid -f "$TERMINAL" -e less $infofile ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+printf "Public: $(curl -s ifconfig.me)\nPrivate: $(hostname -i)\n\n$(ifconfig)\n\n$(ip address)" > $infofile
+curl -s ifconfig.me

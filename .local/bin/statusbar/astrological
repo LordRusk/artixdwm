@@ -37,25 +37,13 @@ scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
 [ "$(stat -c %y "$moonfile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "wttr.in/?format=%m" > "$moonfile" || exit 1 ;}
 [ "$(stat -c %y "$horoscope" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
-	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" > "$scopefile" || exit 1 ;}
+	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g' $scopefile | cut -d: -f 2 > "$scopefile" || exit 1 ;}
 
 # Moonphase stuff
 moon="$(cat "$moonfile")"
-case "$moon" in
-	🌑)moonname="New" ;;
-	🌒)moonname="Waxing Crescent" ;;
-	🌓)moonname="First Quarter" ;;
-	🌔)moonname="Waxing Gibbous" ;;
-	🌕)moonname="Full" ;;
-	🌖)moonname="Waning Gibbous" ;;
-	🌗)moonname="Last Quarter" ;;
-	🌘)moonname="Waning Crescent" ;;
-	*) exit 1 ;;
-esac
+echo "${moon-?}"
 
 # Horoscope stuff
-horoscope="$(sed '1,2d;4,5d;s/\"//g;s/\",//g' $scopefile | cut -d: -f 2)"
-sign="$(sed '1,2d;3d;5d;s/\"//g' $scopefile | cut -d ' ' -f 4)"
 case "$sign" in
 	aries) sign="♈" ;;
 	cancer) sign="♋" ;;
@@ -71,9 +59,6 @@ case "$sign" in
 	pisces) sign="♓" ;;
 esac
 
-# Print to the bar
-echo "${moon-?}"
-
 # Clickable bar stuff
 case $BLOCK_BUTTON in
 	1) notify-send "🌜 Moon phass:
@@ -86,9 +71,8 @@ case $BLOCK_BUTTON in
 - 🌗: Last Quarter
 - 🌘: Waning Crescent" ;;
 	2) notify-send "Moon phase and horoscope" "\- Shows moon phase
-- Shows 🔃 if updating
 - Right Click Shows different moon phases
 - Left Click Shows Horoscope" ;;
-	3) notify-send -t 0 "Horoscope $sign:$horoscope" ;;
+	3) notify-send -t 0 "Horoscope $sign:$(cat $scopefile)" ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

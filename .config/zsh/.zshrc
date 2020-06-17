@@ -1,12 +1,10 @@
 # Rusk's config for the Zoomer Shell
 
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-#PS1="%{$fg[magenta]%}%~$reset_color > "
-
+PS1="%B%{$fg[red]%}[%~] %{$reset_color%}$%b "
 # History in cache directory:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
 # Basic auto/tab complete:
@@ -64,9 +62,9 @@ bindkey '^v' edit-command-line
 # Source configs
 source $HOME/.config/aliasrc
 
-# Load zsh-syntax-highlighting; should be last.
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+# Load fast-syntax-highlighting; should be last.
+source ~/.local/src/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Bugmen set neofetch to show everytime they open their terminal...
 # We are not bugmen.
-unix
+#unix

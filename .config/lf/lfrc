@@ -1,38 +1,103 @@
-# Luke's lf settings
+# Rusk's lfrc
 
-# Basic vars
-set shell sh
-set previewer ~/.config/lf/scope
+# Basic settings
+set shell bash
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
 set color256
-set hidden true
-#set icons true
+set icons
+set period 1
+set drawbox
+
+# Vars that depend on environmental variables
+$lf -remote "send $id set previewer ${XDG_CONFIG_HOME:-$HOME/.config}/lf/scope"
+
 
 # cmds/functions
 cmd open ${{
-    case $(file --mime-type $f -b) in
-    	text/troff) man ./ $f;;
-        text/*) $EDITOR $fx;;
-	image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
-	image/*) rotdir $f | setsid sxiv -aio 2>/dev/null | lf-select & ;;
-	audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
-	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
-	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
-	archive/tar) tar --extract -f $f > /dev/null 2>$1 & ;;
-        *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
-    esac
+	case $(file -b "$f" | cut -d ' ' -f 1) in
+		[Jj][Pp][Ee][Gg]|[Jj][Pp][Gg]|[Pp][Nn][Gg]|[Mm]4[Aa]|[Ff][Aa][Rr][Bb][Ff][Ee][Ll][Dd]|[Gg][Ii][Ff]) ifinstalled sxiv && rotdir "$f" | setsid sxiv -aio 2>/dev/null | lf-select & ;; # image
+		[Gg][Ii][Mm][Pp]) ifinstalled gimp && setsid gimp "$f" >/dev/null 2>&1 & ;;
+		[Mm][Pp]4|[Mm][Aa][Tt][Rr][Oo][Ss][Kk][Aa]|[Ww][Ee][Bb][Mm]|[Aa][Vv][Ii]|[Ww][Mm][Vv]|[Ii][Ss][Oo]) ifinstalled mpv && setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$f" -quiet >/dev/null 2>&1 & ;; # video
+		[Aa][Uu][Dd][Ii][Oo]|[Mm][Pp]3|[Oo][Gg][Gg]|[Aa][Aa][Cc]|[Ff][Ll][Aa][Cc]|[Aa][Ll][Aa][Cc]|[Oo][Pp][Uu][Ss]|[Mm]4[Aa]) ifinstalled mpv && setsid st -t "lfmpv" -e mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$f" >/dev/null 2>&1 & ;; # audio
+		[Aa][Uu][Pp]|[Aa][Uu][Dd][Aa][Cc][Ii][Tt][Yy]) ifinstalled audacity && setsid audacity "$f" >/dev/null 2>&1 & ;;
+		[Pp][Dd][Ff]|[Pp][Ss]) setsid $READER "$f" > /dev/null 2>&1 & ;; # documents
+		[Tt][Oo][Rr][Rr][Ee][Nn][Tt]) ifinstalled transmission-cli && transadd "$f" >/dev/null 2>&1 & ;;
+		tar.bz2|*.tbz2|*.tar.xz|*.tar.gz|*.tgz|*.lzma|*.bz2|*.rar|*.gz|*.tar|*.zip|*.Z|*.7z|*.xz|*.exe) ext "$f" >/dev/null 2>&1; clear ;; # exaction stuff
+		*.log.gz) $EDITOR $fx ;; #setting for compressed log files
+		*.html) setsid $BROWSER "$f" >/dev/null 2>&1 & ;; # html
+		*.jar) setsid java -jar "$f" >/dev/null 2>&1 & ;; # run jars
+		*.exe) setsid wine "$f" >/dev/null 2>&1 & ;; # run windows programs in wine
+		*) $EDITOR "$fx" ;; # everything else
+	esac
 }}
 
+#cmd open ${{
+#	case "$(file -b \"$f\" | cut -d ' ' -f 1" in
+#		*.jpeg|*.jpg|*.png|*.m4a|*.ff|*.gif) ifinstalled sxiv && rotdir "$f" | setsid sxiv -aio 2>/dev/null | lf-select & ;; # image
+#		*.xcf) ifinstalled gimp && setsid gimp "$f" >/dev/null 2>&1 & ;;
+#		*.mp4|*.mkv|*.webm|*.avi|*.wmv) ifinstalled mpv && setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$f" -quiet >/dev/null 2>&1 & ;; # video
+#		*.mp3|*.ogg|*.aac|*.flac|*.alac|*.opus|*.m4a) ifinstalled mpv && setsid st -t "lfmpv" -e mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$f" >/dev/null 2>&1 & ;; # audio
+#		*.aup) ifinstalled audacity && setsid audacity "$f" >/dev/null 2>&1 & ;;
+#		*.pdf|*.ps) setsid $READER "$f" > /dev/null 2>&1 & ;; # documents
+#		*.torrent) ifinstalled transmission-cli && transadd "$f" >/dev/null 2>&1 & ;;
+#		*.tar.bz2|*.tbz2|*.tar.xz|*.tar.gz|*.tgz|*.lzma|*.bz2|*.rar|*.gz|*.tar|*.zip|*.Z|*.7z|*.xz|*.exe) ext "$f" >/dev/null 2>&1; clear ;; # exaction stuff
+#		*.log.gz) $EDITOR $fx ;; #setting for compressed log files
+#		*.html) setsid $BROWSER "$f" >/dev/null 2>&1 & ;; # html
+#		*.jar) setsid java -jar "$f" >/dev/null 2>&1 & ;; # run jars
+#		*.exe) setsid wine "$f" >/dev/null 2>&1 & ;; # run windows programs in wine
+#		*) $EDITOR "$fx" ;; # everything else
+#	esac
+#}}
+
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
 cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
-	clear; printf "delete?[y/N]"
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
 	read ans
 	[ $ans = "y" ] && rm -rf $fx
 }}
 
+cmd moveto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Move to where?"
+	dest="$(find /mnt $HOME | fzf | sed 's|~|$HOME|' )" &&
+	for x in $fx; do
+		eval mv -iv \"$x\" \"$dest\"
+	done &&
+	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+}}
+
+cmd copyto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Copy to where?"
+	dest="$(find /mnt $HOME | fzf | sed 's|~|$HOME|' )" &&
+	for x in $fx; do
+		eval cp -ivr \"$x\" \"$dest\"
+	done &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+cmd customopen ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear
+	printf "Open file in: "
+	read ans
+	for x in $fx; do
+		setsid st -e $ans "$x"
+	done &&
+	setsid st -e $ans $fx >/dev/null 2>&1 &
+
 cmd mkfile ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	clear; echo "File Name: "
 	read ans
@@ -40,50 +105,65 @@ cmd mkfile ${{
 }}
 
 cmd mkdir ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
-	clear; echo "Directory Name: "
+	clear
+	echo "Directory Name: "
 	read ans
 	mkdir $ans
 }}
 
-cmd copyto ${{
+cmd symlink ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
-	clear; echo "Copy to where?"
-	dest="$(find $HOME -type d | fzf)" &&
-	cp -ivr $fx $dest &&
-	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+	clear
+	echo "Name or Directory for new symlink?"
+	read ans
+	ln -s $f $ans
 }}
 
-cmd moveto ${{
+cmd slideshowfile ${{
 	set -f
-	clear; echo "Move to where?"
-	dest="$(find $HOME -type d | fzf)" &&
-	mv $fx $dest &&
-	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+	clear
+	setsid slideshow -p "$f/" >/dev/null 2>&1 &
 }}
 
-cmd bulkrename ${{
-	vidir
+cmd slideshowlist ${{
+	set -f
+	setsid slideshow -l "$fx" >/dev/null 2>&1 &
 }}
 
-cmd executable ${{
-	chmod +x $f
-}}
+cmd executable ${{ chmod +x "$f"; }}
 
-cmd unexecutable ${{
-	chmod -x $f
-}}
+cmd unexecutable ${{ chmod -x "$f"; }}
+
+cmd browseropen ${{ setsid $BROWSER "$fx" >/dev/null 2>&1 & ; }}
+
+cmd setbg ${{ setbg -w "$f" > /dev/null 2>&1; }}
+
+cmd bulkrename ${{ vidir; }}
+
+cmd scd ${{ scd; }}
+
+cmd sv ${{ sv; }}
 
 # Bindings
+map l open
 map v mkfile
 map g top
 map d delete
+map sd sudodelete
 map C copyto
 map M moveto
 map m mkdir
 map b bulkrename
+map sv sv
+map scd scd
+map sp slideshowfile
+map sl slideshowlist
 map <enter> shell
 map x executable
 map X unexecutable
-map o &mimeopen "$f"
-map O $mimeopen --ask "$f"
+map o customopen
+map B browseropen
+map w setbg

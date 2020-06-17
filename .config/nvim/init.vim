@@ -9,6 +9,11 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'lukesmithxyz/vimling'
+Plug 'bling/vim-airline'
+Plug 'kovetskiy/sxhkd-vim'
+Plug 'dracula/vim'
+Plug 'fatih/vim-go'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 set mouse=a

@@ -13,8 +13,11 @@
 # Update mail and refresh the statusbar.
 */30 * * * * mailsync; kill -$((34+12)) $(pidof dwmblocks)
 
-# Check for new packages every 10 minutes
-0,10,20,30,40,50  * * * * checkup
+# Check for new packages every 30 minutes
+*/2 * * * * checkup
+
+# Check for news every 10 minutes
+*/6 * * * * newsup
 
 # Check if battery is below 25% and sends notifcation if so.
 * * * * * cronbat

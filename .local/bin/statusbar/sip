@@ -14,5 +14,5 @@ case $BLOCK_BUTTON in
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-printf "Public: $(curl -s ifconfig.me)\nPrivate: $(hostname -i)\n\n$(ifconfig)\n\n$(ip address)" > $infofile
+printf "Public: $(curl -s ifconfig.me)\nPrivate: $(hostname -i)\n\n$(ip address)" > $infofile
 printf "🌐 $(grep Public $infofile | cut  -d ' ' -f 2)"

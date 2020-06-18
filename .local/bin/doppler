@@ -1,0 +1,14 @@
+#/bin/sh
+
+# This is a script that shows
+# a recent weather doppler from
+# weather.gov/radar. Use that
+# site and weather.gov/radar/lite
+# to find one suitable for your
+# use.
+
+[ $(cat /sys/class/net/w*/operstate) = "down" ] && exit
+
+notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
+
+mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --loop=inf https://radar.weather.gov/lite/N0R/PDT_loop.gif

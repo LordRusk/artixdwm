@@ -11,13 +11,13 @@
 
 ### STATUS BAR MODULES ###
 # Update mail and refresh the statusbar.
-*/30 * * * * mailsync; kill -$((34+12)) $(pidof dwmblocks)
+*/2 * * * * mailsync; kill -$((34+12)) $(pidof dwmblocks)
 
 # Check for new packages every 30 minutes
-*/2 * * * * checkup
+*/30 * * * * checkup
 
 # Check for news every 10 minutes
-*/6 * * * * newsup
+*/10 * * * * newsup
 
 # Check if battery is below 25% and sends notifcation if so.
 * * * * * cronbat

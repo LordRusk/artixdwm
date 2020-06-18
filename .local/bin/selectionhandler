@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-# Simple script to handle the clipboard and primary
-# and pipe them into a script. $1 is assumed to
-# be that script.
+# Simple set of logical
+# operations that help
+# handling the selections.
 
 # If both 'clipboard' and 'primary' and empty,
 # send a notification and exit.
@@ -11,7 +11,7 @@
 # If either 'clipboard' or 'primary' is empty, pipe
 # un-empty selection straight to $1 then exit.
 [ -z "$(xclip -o -selection clipboard)" ] && $1 "$(xclip -o -selection primary)" && exit
-[ -z "$selection" ] && [ -z "$(xclip -o -selection primary)" ] && $1 "$(xclip -o -selection clipboard)" && exit
+[ -z "$(xclip -o -selection primary)" ] && $1 "$(xclip -o -selection clipboard)" && exit
 
 # If both 'clipboard' and 'primary' contain
 # the same thing, pipe it straight into $1 then exit.
@@ -21,8 +21,7 @@
 # also giving a better view using showclip.
 showclip &
 selection="$(printf "Clipboard: $(xclip -o -selection clipbard)\nPrimary: $(xclip -o -selection primary)" | dmenu -l 2 -p "Which selection would you like to pipe?")"
-[ "$(echo $selection | awk '{print $1}')" = "Clipboard:" ] && selection="$(xclip -o -selection clipboard)"
-[ "$(echo $selection | awk '{print $1}')" = "Primary:" ] && selection="$(xclip -o -selection primary)"
+[ "$(echo $selection | cut -f 1)" = "Clipboard:" ] && selection="$(xclip -o -selection clipboard)" || selection="$(xclip -o -selection primary)"
 [ -z "$selection" ] && printf "Error...\\nNo selection selected, Exiting..." && exit
 
 # Pipe the selection into the specified script.

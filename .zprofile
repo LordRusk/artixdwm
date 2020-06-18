@@ -6,7 +6,7 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export READER="zathura"
 export FILE="lf"
-export BROWSER="brave"
+export BROWSER="surf"
 export STATUSBAR="dwmblocks"
 export LOCKER="locker-dwmc"
 

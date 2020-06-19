@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # This is a script that shows
 # a recent weather doppler from
@@ -7,7 +7,7 @@
 # to find one suitable for your
 # use.
 
-[ $(cat /sys/class/net/w*/operstate) = "down" ] && exit
+[ $(cat /sys/class/net/w*/operstate) = "down" ] && notify-send "Unable to load doppler" "No internet connection" && exit
 
 notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
 

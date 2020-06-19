@@ -4,6 +4,10 @@
 # operations that help
 # handling the selections.
 
+# If $1 is empty, send and
+# notification and quit
+[ -z "$1" ] && notify-send "Unable to pipe selection!" "No script was specified!"
+
 # If both 'clipboard' and 'primary' and empty,
 # send a notification and exit.
 [ -z "$(xclip -o -selection clipboard)" ] && [ -z "$(xclip -o -selection primary)" ] && notify-send "Unable to grab selection!" "'clipboard' and 'primary' are both empty" && exit
@@ -25,4 +29,4 @@ selection="$(printf "Clipboard: $(xclip -o -selection clipbard)\nPrimary: $(xcli
 [ -z "$selection" ] && printf "Error...\\nNo selection selected, Exiting..." && exit
 
 # Pipe the selection into the specified script.
-[ -z "$1" ] && notify-send "Unable to pipe selection!" "No script was specified!" || $1 "$selection"
+$1 "$selection"

@@ -15,4 +15,4 @@ case $BLOCK_BUTTON in
 esac
 
 printf "🌐 $(grep Public $infofile | cut  -d ' ' -f 2)"
-printf "Public: $(curl -s ifconfig.me)\nPrivate: $(ip address | grep "global dynamic" | cut -d' ' -f 6)\n\n$(ip address)" > $infofile
+printf "Public: $(curl -s ifconfig.me)\nPrivate: $(ip address | grep "global dynamic" | cut -d' ' -f 6)\n\n$(ip address)" > $infofile &

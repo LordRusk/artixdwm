@@ -21,7 +21,7 @@
 # also giving a better view using showclip.
 showclip &
 selection="$(printf "Clipboard: $(xclip -o -selection clipbard)\nPrimary: $(xclip -o -selection primary)" | dmenu -l 2 -p "Which selection would you like to pipe?")"
-[ "$(echo $selection | cut -f 1)" = "Clipboard:" ] && selection="$(xclip -o -selection clipboard)" || selection="$(xclip -o -selection primary)"
+[ "$(echo $selection | cut -d' ' -f 1)" = "Clipboard:" ] && selection="$(xclip -o -selection clipboard)" || selection="$(xclip -o -selection primary)"
 [ -z "$selection" ] && printf "Error...\\nNo selection selected, Exiting..." && exit
 
 # Pipe the selection into the specified script.

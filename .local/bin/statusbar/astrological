@@ -42,8 +42,7 @@ scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
 	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
 
 # Moonphase stuff
-moon="$(cat "$moonfile")"
-echo "${moon-?}"
+cat "$moonfile"
 
 # Horoscope stuff
 case "$sign" in

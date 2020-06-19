@@ -5,8 +5,8 @@
 # handling the selections.
 
 # If $1 is empty, send and
-# notification and quit
-[ -z "$1" ] && notify-send "Unable to pipe selection!" "No script was specified!"
+# notification and exit
+[ -z "$1" ] && notify-send "Unable to pipe selection!" "No script was specified!" && exit
 
 # If both 'clipboard' and 'primary' and empty,
 # send a notification and exit.

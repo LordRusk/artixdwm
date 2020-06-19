@@ -28,15 +28,9 @@
 # dwm with dwmc and the xrdb patch
 # automatically.
 
-# Dependencies:
-# [hsetroot|awk|sed]
-
-# Optional:
-# [imlib2|pywal|dwmc]
-
 # Error codes.
-feherror() { echo "Syntax Error...Exiting..."; }
-pywalerror() { echo "Unsupported file format or farbfeld compression algorithm...Exiting..."; }
+feherror() { echo "Syntax Error...Exiting..."; exit; }
+pywalerror() { echo "Unsupported file format or farbfeld compression algorithm...Exiting..."; exit; }
 
 # Parser
 while getopts "w:h:m:pN" parm; do case $parm in

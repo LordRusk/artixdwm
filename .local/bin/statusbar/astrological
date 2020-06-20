@@ -39,7 +39,7 @@ scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
 [ "$(stat -c %y "$moonfile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "wttr.in/?format=%m" > "$moonfile" || exit 1 ;}
 [ "$(stat -c %y "$horoscope" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
-	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
+	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g;s/.,/./g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
 
 # Moonphase stuff
 cat "$moonfile"

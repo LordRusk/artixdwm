@@ -5,7 +5,7 @@
 
 case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e nmtui; pkill -RTMIN+4 dwmblocks ;;
-	3) notify-send "🌐 Internet module" "\- Click to connect
+	2) notify-send "🌐 Internet module" "\- Click to connect
 📡: no wifi connection
 📶: wifi connection with quality
 ❎: no ethernet

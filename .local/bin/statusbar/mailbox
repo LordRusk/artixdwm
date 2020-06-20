@@ -5,11 +5,11 @@
 
 case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e neomutt & ;;
-	2) setsid -f mailsync >/dev/null & ;;
-	3) notify-send "📬 Mail module" "\- Shows unread mail
+	2) notify-send "📬 Mail module" "\- Shows unread mail
 - Shows 🔃 if syncing mail
 - Left click opens neomutt
 - Middle click syncs mail" ;;
+	3) setsid -f mailsync >/dev/null & ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

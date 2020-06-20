@@ -5,6 +5,8 @@
 # Dependencies:
 # [speedtest-cli]
 
+ifinstalled speedtest-cli || exit
+
 # Check if connected to internet
 # and if so, exit.
 [ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && notify-send "Not Connected To Internet" && exit

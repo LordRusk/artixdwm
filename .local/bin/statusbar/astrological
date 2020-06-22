@@ -38,7 +38,7 @@ scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
 # Get new info everyday
 [ "$(stat -c %y "$moonfile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "wttr.in/?format=%m" > "$moonfile" || exit 1 ;}
-[ "$(stat -c %y "$horoscope" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
+[ "$(stat -c %y "$scopefile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g;s/.,/./g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
 
 # Moonphase stuff
@@ -75,5 +75,6 @@ case $BLOCK_BUTTON in
 - Right Click Shows different moon phases
 - Left Click Shows Horoscope" ;;
 	3) notify-send -t 0 "Horoscope $sign:$(cat $scopefile)" ;;
+	8) rm $scopefile && kill -$((34+18)) $(pidof dwmblocks) ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

@@ -3,9 +3,6 @@
 # A helpful script to update any dwmblocks module with
 # an update signal not equal to 0.
 
-# Quit if dwmblocks ins't installed
-ifinstalled dwmblocks
-
 # Please give a path to the blocks.h file
 path="$HOME/.local/src/dwmblocks/blocks.h"
 
@@ -13,7 +10,7 @@ path="$HOME/.local/src/dwmblocks/blocks.h"
 activeblocks="$(grep '{""' $path | sed 's/\/\*.*//g;/^$/d;s/"//g;s/,//g;s/{//g;s/}//g;s/ //g')"
 
 # Prompt the user to select a module
-mod="$(printf "$activeblocks" | awk '{print $1}' | dmenu -l 10 -p "Which dwmblocks module would you like to refresh?")"
+mod="$(echo "$activeblocks" | awk '{print $1}' | dmenu -l 10 -p "Which dwmblocks module would you like to refresh?")"
 
 # Refresh that module
-kill -$((34+"$(printf "$activeblocks" | grep $mod | awk '{print $3}')")) $(pidof dwmblocks)
+pkill -RTMIN+"$(echo "$activeblocks" | grep $mod | awk '{print $3}')" $STATUSBAR

@@ -13,7 +13,7 @@ player() { mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --loo
 dopplerdir="N0R"
 
 [ $(cat /sys/class/net/w*/operstate) = "down" ] && {
-	notify-send "Loading old doppler..." "Device not connected to internet, using last saved doppler" && player $dopplerfile; exit 1; }
+	notify-send "🔃 Loading old doppler..." "Device not connected to internet, using last saved doppler" && player $dopplerfile; exit 1; }
 
 notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
 

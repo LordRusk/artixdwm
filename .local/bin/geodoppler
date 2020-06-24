@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Check dependencies
+[ -z "$(pacman -Qq | grep ^curl$)" ] && notify-send "📦 curl" "must be installed for this function." && exit 1
+[ -z "$(pacman -Qq | grep ^geoip$)" ] && notify-send "📦 geoip" "must be installed for this function." && exit 1
+[ -z "$(pacman -Qq | grep ^geoip-database-extra$)" ] && notify-send "📦 geoip-database-extra" "must be installed for this function." && exit 1
+
+localelist="$HOME/.local/share/localelist"
+dopplerfile="$HOME/.local/share/doppler.gif"
+player() { mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --loop=inf $1; }
+# Which directory on radar.weather.gov/lite
+# to download doppler from.
+dopplerdir="N0R"
+
+[ $(cat /sys/class/net/w*/operstate) = "down" ] && {
+	notify-send "Loading old doppler..." "Device not connected to internet, using last saved doppler" && player $dopplerfile; exit 1; }
+
+notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
+
+wget -O $dopplerfile radar.weather.gov/lite/${dopplerdir}/$(grep $(geoiplookup $(curl -s ifconfig.me) | grep City | cut -d, -f5) $localelist | cut -d';' -f1)_loop.gif
+
+player $dopplerfile

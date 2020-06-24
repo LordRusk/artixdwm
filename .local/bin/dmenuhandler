@@ -3,7 +3,7 @@
 # Feed this script a link and it will give dmenu
 # some choice programs to use to open it.
 
-case "$(printf "copy url\\nmpv\\nmpv (loop)\\ndownload\\nyoutube-dl\\nfeh\\nbrowser\\nw3m\\nmpv (float)\\nrss\\nTransmission-Daemon\\nRss Add" | dmenu -i -p "Open link with what program?")" in
+case "$(printf "copy url\\nmpv\\nmpv (loop)\\ndownload\\nyoutube-dl\\nfeh\\nbrowser\\nw3m\\nmpv (float)\\nrss\\nTransmission-Daemon" | dmenu -i -p "Open link with what program?")" in
 	"copy url") echo "$1" | xclip -selection clipboard ;;
 	mpv) notify-send "🔃 Video is loading..." "Your video is currently loading, give it a second..."  & setsid mpv -quiet "$1" >/dev/null 2>&1 & ;;
 	"mpv (loop)") notify-send "🔃 Video is loading..." "Your video is currently loading, give it a second..." & setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%s) -quiet --loop "$1" >/dev/null 2>&1 & ;;

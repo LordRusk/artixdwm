@@ -17,6 +17,6 @@ dopplerdir="N0R"
 
 notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
 
-wget -O $dopplerfile radar.weather.gov/lite/${dopplerdir}/$(grep $(geoiplookup $(curl -s ifconfig.me) | grep City | cut -d, -f5) $localelist | cut -d';' -f1)_loop.gif
+wget -O $dopplerfile radar.weather.gov/lite/${dopplerdir}/$(grep :$(geoiplookup $(curl -s ifconfig.me): | grep City | cut -d, -f5) $localelist | cut -d';' -f1)_loop.gif
 
 player $dopplerfile

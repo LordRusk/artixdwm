@@ -7,8 +7,9 @@
 # to find one suitable for your
 # use.
 
-[ $(cat /sys/class/net/w*/operstate) = "down" ] && notify-send "Unable to load doppler" "No internet connection" && exit
+dopplerfile="$HOME/.local/share/doppler.gif"
 
-notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."
+[ $(cat /sys/class/net/w*/operstate) = "down" ] && notify-send "Loading old doppler..." "Device not connected to internet, using last saved doppler" || \
+	{ notify-send "🔃 Doppler Loading..." "Loading weather doppler, give it a second..."; wget -O $dopplerfile https://radar.weather.gov/lite/N0R/PDT_loop.gif > /dev/null >&1; }
 
-mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --loop=inf https://radar.weather.gov/lite/N0R/PDT_loop.gif
+mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --loop=inf $HOME/.local/share/doppler.gif

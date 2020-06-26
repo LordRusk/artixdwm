@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Loops through all batteries and puts
-# correct emoji/font awesome icon.
+# correct emoji/fa icon.
 
 case $BLOCK_BUTTON in
 	2) notify-send "🔋 Battery module" "🔋: discharging
@@ -25,5 +25,5 @@ for battery in /sys/class/power_supply/BAT?; do
 		[ $capacity -le 25 ] && status="" && [ "$status" = "dis" ] && warn="❗"
 		[ $capacity -le 5 ] && status=""; }
 
-	printf "%s%s%s%% " "$status" "$warn" "$capacity" | sed 's/ $//'
-done
+	printf "%s%s%s%% " "$status" "$warn" "$capacity"
+done | sed 's/ $//'

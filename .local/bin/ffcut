@@ -38,7 +38,7 @@ while :; do
 	[ $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f2) = "end" ] && break || [ $sts = $((cycles+1)) ] && \
 		ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $finaltime -c:v copy -c:a copy $fts.mkv && \
 			echo "file $fts.mkv" >> filelist && break || \
-				ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) -c:v copy -c:a copy $fts.mkv;
+				ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) -c:v copy -c:a copy $fts.mkv
 	echo "file $fts.mkv" >> filelist
 	fts=$((fts+1))
 	sts=$((sts+1))

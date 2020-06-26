@@ -3,41 +3,49 @@
 # A very nice script for
 # making cuts in videos.
 
+# end -- end signifies
+# the end of the file.
+
 ### TIMESTAMP FILE SHOULD LOOK LIKE THIS ###
 # 04:30 05:23
 # 07:54 08:32
 # 12:22 17:32
-# 22:22 22:32
+# 22:22 end
 # No comments or shenanigans. Just time codes.
 
 [ ! -f "$3" ] && printf "The first file should be the input file, the second should be the output file, the third, the time codes for the cuts.\\n" && exit
 
 cuterror() { printf "Error cutting...\nMake sure time codes are formatted correctly and the input file isn't corrupted\n"; exit; }
 
-input=$1
-output=$2
-cutcodes=$(cat $3 | tr '\n' ';')
+input="$1"
+output="$2"
+cutcodes=$(cat "$3" | tr '\n' ';')
 cycles=$(cat $3 | wc -l)
 finaltime=$(ffmpeg -i $input 2>&1 | grep Duration | cut -d ' ' -f 4 | sed s/,//)
 fts=1
 sts=2
 
 # first cut has to happen outside the loop
+# if its not the beginning of the file.
 printf "Cutting...\n"
-ffmpeg -nostdin -y -i test-input-video.mkv -to $(echo $cutcodes | cut -d';' -f 1 | cut -d' ' -f 1) -c:v copy -c:a copy 0.mkv >/dev/null 2>&1 || cuterror
-echo "file 0.mkv" >> filelist
+case $(echo $cutcodes | cut -d';' -f1 | cut -d' ' -f1 | tr -d ':') in
+	0*) ;;
+	*) ffmpeg -nostdin -y -i $input -to $(echo $cutcodes | cut -d';' -f 1 | cut -d' ' -f 1) -c:v copy -c:a copy 0.mkv || cuterror
+	echo "file 0.mkv" >> filelist ;;
+esac >/dev/null 2>&1
 
-while true; do
-	[ "$sts" = $((cycles+1)) ] && ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $finaltime -c:v copy -c:a copy $fts.mkv && \
+while :; do
+	[ $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f2) = "end" ] && break || [ $sts = $((cycles+1)) ] && \
+		ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $finaltime -c:v copy -c:a copy $fts.mkv && \
 			echo "file $fts.mkv" >> filelist && break || \
-				ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) -c:v copy -c:a copy $fts.mkv
+				ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) -c:v copy -c:a copy $fts.mkv;
 	echo "file $fts.mkv" >> filelist
 	fts=$((fts+1))
-	sts=$((fts+1))
+	sts=$((sts+1))
 done >/dev/null 2>&1 || cuterror
 
 printf "Merging...\n"
-ffmpeg -f concat -i filelist -c copy -strict -2 $output >/dev/null >/dev/null 2>&1 || \
+ffmpeg -f concat -i filelist -c copy -strict -2 $output >/dev/null 2>&1 || \
 	printf "Error merging...\nMake sure the output file is correctly named and file format is supported by ffmpeg.\n"
 
 printf "Removing leftover files...\n"

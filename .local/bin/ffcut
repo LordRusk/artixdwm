@@ -3,15 +3,14 @@
 # A very nice script for
 # making cuts in videos.
 
-# end -- end signifies
-# the end of the file.
+# end -- signifies the
+# end of the file.
 
-### TIMESTAMP FILE SHOULD LOOK LIKE THIS ###
+### TIMESTAMP FILE *SHOULD* LOOK LIKE THIS ###
 # 04:30 05:23
 # 07:54 08:32
 # 12:22 17:32
 # 22:22 end
-# No comments or shenanigans. Just time codes.
 
 [ ! -f "$3" ] && printf "The first file should be the input file, the second should be the output file, the third, the time codes for the cuts.\\n" && exit
 
@@ -19,7 +18,7 @@ cuterror() { printf "Error cutting...\nMake sure time codes are formatted correc
 
 input="$1"
 output="$2"
-cutcodes=$(cat "$3" | tr '\n' ';')
+cutcodes=$(sed 's/\s*#.*//g;/^$/d' "$3" | tr '\n' ';')
 cycles=$(cat $3 | wc -l)
 finaltime=$(ffmpeg -i $input 2>&1 | grep Duration | cut -d ' ' -f 4 | sed s/,//)
 fts=1

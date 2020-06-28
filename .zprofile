@@ -8,7 +8,7 @@ export READER="zathura"
 export FILE="lf"
 export BROWSER="surf"
 export STATUSBAR="dwmblocks"
-export LOCKER="locker-dwmc"
+export LOCKER="locker"
 
 # ~/ Clean-up
 export ZDOTDIR="$HOME/.config/zsh"

@@ -4,6 +4,9 @@
 # operations that help
 # handling the selections.
 
+# $1 is assumed to be the script
+# to pipe the selectoin to.
+
 # If $1 is empty, send and
 # notification and exit
 [ -z "$1" ] && notify-send "Unable to pipe selection!" "No script was specified!" && exit
@@ -26,6 +29,8 @@
 showclip &
 selection="$(printf "Clipboard: $(xclip -o -selection clipbard)\nPrimary: $(xclip -o -selection primary)" | dmenu -l 2 -p "Which selection would you like to pipe?")"
 [ "$(echo $selection | cut -d' ' -f 1)" = "Clipboard:" ] && selection="$(xclip -o -selection clipboard)" || selection="$(xclip -o -selection primary)"
+# if the user presses 'esc' to exit
+# out of dmenu, exit the script.
 [ -z "$selection" ] && printf "Error...\\nNo selection selected, Exiting..." && exit
 
 # Pipe the selection into the specified script.

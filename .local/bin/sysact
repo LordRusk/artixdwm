@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# A dmenu wrapper script for system functions.
+# A dmenu wrapper script and cli for system functions.
 
 # For non-systemd init systems.
 case "$(readlink -f /sbin/init)" in
@@ -8,8 +8,18 @@ case "$(readlink -f /sbin/init)" in
 	*openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
 esac
 
+
+[ -z "$1" ] || case $1 in
+	lock) locker && exit ;;
+	leave) kill -TERM $(pidof -s dwm) && exit ;;
+	renew) kill -HUP $(pidof -s dwm) && exit ;;
+	hibernate) ${hib:-sudo -A systemctl suspend-then-hibernate} && exit ;;
+	reboot) ${reb:-sudo -A reboot} && exit ;;
+	shutdown) ${shut:-sudo -A shutdown -h now} && exit ;;
+esac
+
 cmds="\
-🔒 lock		slock
+🔒 lock		locker
 🚪 leave dwm	kill -TERM $(pidof -s dwm)
 ♻ renew dwm	kill -HUP $(pidof -s dwm)
 🐻 hibernate	${hib:-sudo -A systemctl suspend-then-hibernate}

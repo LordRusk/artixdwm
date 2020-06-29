@@ -94,7 +94,7 @@ cmd customopen ${{
 	tmpfile="/tmp/fl-$(date +%s)"
 	for x in $fx; do
 		echo "$x" >> $tmpfile
-	done; setsid st -e $ans $(cat ~/test) & unset tmpfile
+	done >/dev/null 2>&1 && setsid st -e $ans $(cat $tmpfile) & unset tmpfile >/dev/null 2>&1
 }}
 
 cmd mkfile ${{

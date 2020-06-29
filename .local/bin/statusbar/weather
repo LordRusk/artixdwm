@@ -12,12 +12,12 @@ case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e less -Srf "$weatherreport" ;;
 	2) notify-send "🌈 Weather module" "\- Left click for full forecast.
 - Right click for doppler of current area.
-- Ctrl+Right click to update forecast.
+- Ctrl+Left click to update forecast.
 ☔: Chance of rain/snow
 ❄: Daily low
 🌞: Daily high" ;;
 	3) geodoppler & ;;
-	8) rm $weatherreport && kill -$((34+5)) $(pidof dwmblocks) ;;
+	8) rm $weatherreport && kill -$((34+5)) $(pidof dwmblocks) && exit ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

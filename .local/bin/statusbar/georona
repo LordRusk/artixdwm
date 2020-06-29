@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# check dependencies
+[ -z "$(pacman -Qq | grep ^curl$)" ] && notify-send "📦 curl" "must be installed for this function." && exit 1
+[ -z "$(pacman -Qq | grep ^geoip$)" ] && notify-send "📦 geoip" "must be installed for this function." && exit 1
+[ -z "$(pacman -Qq | grep ^geoip-database-extra$)" ] && notify-send "📦 geoip-database-extra" "must be installed for this function." && exit 1
+
+# vars
+cstats="$HOME/.local/share/cstats"
+# where the script will put your country and state
+countryfile="$HOME/.local/share/country"
+statefile="$HOME/.local/share/state"
+# here you can put in custom country or state.
+ccountry=""
+cstate=""
+# here you set whether the script will look for your
+# state or not. 0 means it look, 1 or anything else means
+# it will not. Should be set to 1 for people outside US.
+lfstate=1
+
+# bar stuff
+case $BLOCK_BUTTON in
+	1) setsid -f "$TERMINAL" -e less -Srf "$cstats" ;;
+	2) notify-send "Corona Virus Module" "\- Left click opens full report
+- Ctrl+Left click updates stats
+😷: Total cases
+🤢: New cases today
+☠: Total deaths
+💀: New deaths today" ;;
+	8) rm $cstats $countryfile $statefile && kill -$((34+19)) $(pidof dwmblocks) && exit ;;
+esac
+
+# get new info everyday
+[ "$(stat -c %y "$cstats" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
+	{ curl -sf "https://corona-stats.online" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚" > $cstats
+	printf "\n\n$(curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚")" >> $cstats
+	geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
+	geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
+
+# print info
+[ "$lfstate" = 0 ] && grep ${cstate:-$(cat $statefile)} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | tail -n1 ||
+	grep ${ccountry:-$(cat $countryfile)} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | head -n1

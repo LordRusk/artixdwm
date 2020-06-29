@@ -23,7 +23,7 @@ cmd open ${{
 		[Aa][Uu][Dd][Ii][Oo]|[Mm][Pp]3|[Oo][Gg][Gg]|[Aa][Aa][Cc]|[Ff][Ll][Aa][Cc]|[Aa][Ll][Aa][Cc]|[Oo][Pp][Uu][Ss]|[Mm]4[Aa]) ifinstalled mpv && setsid st -t "lfmpv" -e mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$f" >/dev/null 2>&1 & ;; # audio
 		[Aa][Uu][Pp]|[Aa][Uu][Dd][Aa][Cc][Ii][Tt][Yy]) ifinstalled audacity && setsid audacity "$f" >/dev/null 2>&1 & ;;
 		[Pp][Dd][Ff]|[Pp][Ss]) setsid $READER "$f" > /dev/null 2>&1 & ;; # documents
-		[Tt][Oo][Rr][Rr][Ee][Nn][Tt]) ifinstalled transmission-cli && transadd "$f" >/dev/null 2>&1 & ;;
+		[Bb][Ii][Tt][Tt][Oo][Rr][Rr][Ee][Nn][Tt]) ifinstalled transmission-cli && transadd "$f" >/dev/null 2>&1 & ;;
 		tar.bz2|*.tbz2|*.tar.xz|*.tar.gz|*.tgz|*.lzma|*.bz2|*.rar|*.gz|*.tar|*.zip|*.Z|*.7z|*.xz|*.exe) ext "$f" >/dev/null 2>&1; clear ;; # exaction stuff
 		*.log.gz) $EDITOR $fx ;; #setting for compressed log files
 		*.html) setsid $BROWSER "$f" >/dev/null 2>&1 & ;; # html
@@ -92,9 +92,9 @@ cmd customopen ${{
 	printf "Open file in: "
 	read ans
 	for x in $fx; do
-		setsid st -e $ans "$x"
-	done &&
-	setsid st -e $ans $fx >/dev/null 2>&1 &
+		echo "$x" >> ~/test
+	done; setsid st -e $ans $(cat ~/test)
+}}
 
 cmd mkfile ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold

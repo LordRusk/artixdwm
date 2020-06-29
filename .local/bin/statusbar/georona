@@ -34,8 +34,8 @@ esac
 [ "$(stat -c %y "$cstats" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "https://corona-stats.online" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚" > $cstats
 	printf "\n\n$(curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚")" >> $cstats
-	geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
-	geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
+	[ -z "$ccountry" ] || geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
+	[ -z "$cstate" ] || geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
 
 # print info
 [ "$lfstate" = 0 ] && grep ${cstate:-$(cat $statefile)} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | tail -n1 ||

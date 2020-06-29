@@ -91,9 +91,10 @@ cmd customopen ${{
 	clear
 	printf "Open file in: "
 	read ans
+	tmpfile="/tmp/fl-$(date +%s)"
 	for x in $fx; do
-		echo "$x" >> ~/test
-	done; setsid st -e $ans $(cat ~/test)
+		echo "$x" >> $tmpfile
+	done; setsid st -e $ans $(cat ~/test) & unset tmpfile
 }}
 
 cmd mkfile ${{

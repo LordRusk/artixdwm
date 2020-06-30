@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # check dependencies
-[ -z "$(pacman -Qq | grep ^curl$)" ] && notify-send "📦 curl" "must be installed for this function." && exit 1
 [ -z "$(pacman -Qq | grep ^geoip$)" ] && notify-send "📦 geoip" "must be installed for this function." && exit 1
 [ -z "$(pacman -Qq | grep ^geoip-database-extra$)" ] && notify-send "📦 geoip-database-extra" "must be installed for this function." && exit 1
 

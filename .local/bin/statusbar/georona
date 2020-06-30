@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # check dependencies
-[ -z "$(pacman -Qq | grep ^geoip$)" ] && notify-send "📦 geoip" "must be installed for this function." && exit 1
-[ -z "$(pacman -Qq | grep ^geoip-database-extra$)" ] && notify-send "📦 geoip-database-extra" "must be installed for this function." && exit 1
+[ -z "`pacman -Qq | grep ^geoip$`" ] && notify-send "📦 geoip" "must be installed for this function." && exit 1
+[ -z "`pacman -Qq | grep ^geoip-database-extra$`" ] && notify-send "📦 geoip-database-extra" "must be installed for this function." && exit 1
 
 # vars
 cstats="$HOME/.local/share/cstats"
@@ -15,7 +15,7 @@ cstate=""
 # here you set whether the script will look for your
 # state or not. 0 means it look, 1 or anything else means
 # it will not. Should be set to 1 for people outside US.
-lfstate=1
+lfstate=0
 
 # bar stuff
 case $BLOCK_BUTTON in
@@ -26,16 +26,18 @@ case $BLOCK_BUTTON in
 🤢: New cases today
 ☠: Total deaths
 💀: New deaths today" ;;
-	8) rm $cstats $countryfile $statefile && kill -$((34+19)) $(pidof dwmblocks) && exit ;;
+	8) rm $cstats $countryfile $statefile && kill -$((34+19)) `pidof dwmblocks` && exit ;;
 esac
 
 # get new info everyday
 [ "$(stat -c %y "$cstats" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "https://corona-stats.online" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚" > $cstats
-	printf "\n\n$(curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚")" >> $cstats
-	[ -z "$ccountry" ] || geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
-	[ -z "$cstate" ] || geoiplookup $(curl -s ifconfig.me) | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
+	printf "\n\n`curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚"`" >> $cstats
+	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
+	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
+
+[ -z "`cat $cstats | head -n1`" ] && printf "❓" && exit 1
 
 # print info
-[ "$lfstate" = 0 ] && grep ${cstate:-$(cat $statefile)} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | tail -n1 ||
-	grep ${ccountry:-$(cat $countryfile)} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | head -n1
+[ "$lfstate" = 0 ] && grep ${cstate:-`cat $statefile`} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | tail -n1 ||
+	grep ${ccountry:-`cat $countryfile`} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | head -n1

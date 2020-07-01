@@ -150,7 +150,7 @@ cmd sv ${{ sv; }}
 
 # Bindings
 map l open
-map v mkfile
+map e mkfile
 map g top
 map d delete
 map sd sudodelete

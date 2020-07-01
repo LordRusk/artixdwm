@@ -15,7 +15,7 @@ cstate=""
 # here you set whether the script will look for your
 # state or not. 0 means it look, 1 or anything else means
 # it will not. Should be set to 1 for people outside US.
-lfstate=1
+lfstate=0
 
 # bar stuff
 case $BLOCK_BUTTON in

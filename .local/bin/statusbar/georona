@@ -15,7 +15,7 @@ cstate=""
 # here you set whether the script will look for your
 # state or not. 0 means it look, 1 or anything else means
 # it will not. Should be set to 1 for people outside US.
-lfstate=0
+lfstate=1
 
 # bar stuff
 case $BLOCK_BUTTON in
@@ -26,15 +26,16 @@ case $BLOCK_BUTTON in
 🤢: New cases today
 ☠: Total deaths
 💀: New deaths today" ;;
-	8) rm $cstats $countryfile $statefile && kill -$((34+19)) `pidof dwmblocks` && exit ;;
+	8) rm "$cstats" "$countryfile" "$statefile" && kill -$((34+19)) `pidof dwmblocks` && exit ;;
 esac
 
 # get new info everyday
 [ "$(stat -c %y "$cstats" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
-	{ curl -sf "https://corona-stats.online" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚" > $cstats
-	printf "\n\n`curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚"`" >> $cstats
-	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f6 | tr -d ',' > $countryfile
-	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f8 | tr -d ',' > $statefile; }
+	{ printf "Last updated `date \"+%j %H:%M\"`\n\n" > "$cstats"
+	curl -sf "https://corona-stats.online" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚" >> "$cstats"
+	printf "\n\n`curl -sf "https://corona-stats.online/states/us" | sed 's/\x1b\[[0-9;]*m//g' | grep -E "║|╔|╚"`" >> "$cstats"
+	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f6 | tr -d ',' > "$countryfile"
+	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f8 | tr -d ',' > "$statefile"; }
 
 [ -z "`cat $cstats | head -n1`" ] && printf "❓" && exit 1
 

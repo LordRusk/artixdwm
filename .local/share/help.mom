@@ -3,7 +3,7 @@
 .SHIFT_LIST 10p
 ..
 .PARA_SPACE 1m
-.TITLE "\s+(10A Guide to PenticleWM! (and More!)\s0"
+.TITLE "\s+(10A Guide to PentacleWM! (and More!)\s0"
 .AUTHOR "\s+5Lordrusk\s0"
 .DOCTYPE    DEFAULT
 .PRINTSTYLE TYPESET

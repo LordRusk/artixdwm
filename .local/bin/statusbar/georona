@@ -15,7 +15,7 @@ cstate=""
 # here you set whether the script will look for your
 # state or not. 0 means it look, 1 or anything else means
 # it will not. Should be set to 1 for people outside US.
-lfstate=0
+lfstate=1
 
 # bar stuff
 case $BLOCK_BUTTON in
@@ -37,7 +37,7 @@ esac
 	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f6 | tr -d ',' > "$countryfile"
 	geoiplookup `curl -s ifconfig.me` | grep City | cut -d' ' -f8 | tr -d ',' > "$statefile"; }
 
-[ -z "`cat $cstats | head -n1`" ] && printf "❓" && exit 1
+[ -z "`cat $cstats | head -n-3`" ] && printf "❓" && exit 1
 
 # print info
 [ "$lfstate" = 0 ] && grep ${cstate:-`cat $statefile`} "$cstats" | sed 's/\s//g' | awk -F'│' '{print "😷"$3,"🤢"$4,"☠"$5,"💀"$6}' | tail -n1 ||

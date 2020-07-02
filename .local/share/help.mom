@@ -1,0 +1,264 @@
+.de LI
+.LIST
+.SHIFT_LIST 10p
+..
+.PARA_SPACE 1m
+.TITLE "\s+(10A Guide to PenticleWM! (and More!)\s0"
+.AUTHOR "\s+5Lordrusk\s0"
+.DOCTYPE    DEFAULT
+.PRINTSTYLE TYPESET
+.PT_SIZE 12
+.START
+Use vim keys (\f(CWh/j/k/l\fP) to navigate this document.
+Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
+\f(CWK\fP and \f(CWJ\fP zoom in and out.
+\f(CWSuper+f\fP to toggle fullscreen.
+\f(CWf\fP will highlight links to follow which are selectable by typing the number that appears plus \f(CWEnter\fP.
+\f(CWq\fP to quit.
+(These are general binds set for \fBzathura\fP, the pdf reader.)
+.LI
+.ITEM
+\f(CWMod+F1\fP will show this document at any time.
+.ITEM
+By \f(CWMod\fP I mean the Super Key, usually known as "the Windows Key."
+.LIST OFF
+.PP
+FAQs are at the end of this document.
+.HEADING 1 "Welcome!"
+.HEADING 2 "Basic goals and principles of this system:"
+.LI
+.ITEM
+\fBNaturalness\fP \(en
+Remove the border between mind and matter:
+everything important should be as few keypresses as possible away from you,
+and you shouldn't have to think about what you're doing.
+Immersion.
+.ITEM
+\fBEconomy\fP \(en
+Programs should be simple and light on system resources and highly extensible.
+Because of this, many are terminal or small ncurses programs that have all the magic inside of them.
+.ITEM
+\fBKeyboard/vim-centrality\fP \(en
+All terminal programs (and other programs) use vim keys when possible.
+Your hands never need leave the home row or thereabout.
+.ITEM
+\fBDecentralization\fP \(en
+This system is a web of small, modifiable and replaceable programs that users can easily customize.
+.LIST OFF
+.HEADING 2 "General keyboard changes"
+.LI
+.ITEM
+Capslock is a useless key in high quality space.
+It's now remapped.
+If you press it alone, it will function as escape, making vimcraft much more natural,
+but you can also hold it down and it will act as another Windows/super/mod key.
+.ITEM
+The menu button (usually between the right Alt and Ctrl) is an alternative Super/Mod button.
+This is to make one-handing on laptops easier.
+.LIST OFF
+If you'd like to change any of these keyboard changes, you need only open and change the \f(CWremaps\fP script.
+All custom scripts are located in \f(CW~/.local/bin/\fP.
+Actually, this should go without saying, but \fIeverything\fP here can easily be changed.
+Below in this document, there is information about where to change programs/components.
+.HEADING 2 "The Status Bar"
+.PP
+To the left, you'll see the numbers of your current tag(s).
+On the right, you'll see various system status notifiers, the date, volume, even coronavirus stats and local weather if possible, etc.
+Each module on the right of the status bar is a script located in \f(CW~/.local/bin/statusbar/\fP.
+You can see what they do and modify them from there.
+I'm sure you can figure it out.
+.PP
+In PenticleWM, the program dwmblocks controls what modules appear in the statusbar; its config file is in its sourcode directory \f(CW~/.local/dwmblocks/blocks.h\fP.
+ , Be sure you play around with these. Be flexible with the basic commands and the system will grow on you quick.
+.LI
+.ITEM
+\f(CWMod+q\fP \(en Close window (Hold down shift to force kill.)
+.ITEM
+\f(CWMod+j/k\fP \(en Move to different windows in the stack
+.ITEM
+\f(CWMod+J/K\fP \(en Move a window around the stack
+.ITEM
+\f(CWMod+h/j\fP \(en Enlarge or shrink how much space the master area has
+.ITEM
+\f(CWMod+Shift+(1-9)\fP \(en Send selected window to different tag
+.ITEM
+\f(CWMod+Control+(1-9)\fP \(en View mulitple tags at once
+.ITEM
+\f(CWMod+0\fP \(en View all tags
+.ITEM
+\f(CWMod+Control+Shift+(1-9)\fP \(en Tag selected window with more then one tag
+.ITEM
+\f(CWMod+Control+s\fP \(en Make window sticky
+.ITEM
+\f(CWMod+(1-9)\fP \(en Switch tags
+.ITEM
+\f(CWMod+z/x\fP \(en Increase/decrease gaps
+.ITEM
+\f(CWMod+a\fP \(en Reset gaps to default size
+.ITEM
+\f(CWMod+Control+a\fP \(en Toggle gaps on/off
+.ITEM
+\f(CWMod+Shift+Z/X\fP \(en Enlarge or shrink how big the borderpx
+.ITEM
+\f(CWMod+Shift+A\fP \(en Reset borderpx to default size
+.ITEM
+\f(CWMod+f\fP \(en Make a window fullscreen
+.ITEM
+\f(CWMod+Shift+F\fP \(en Make a window float
+.ITEM
+\f(CWMod+b\fP \(en Toggle status bar
+.ITEM
+\f(CWMod+Control+</>\fP \(en Cycle through layouts
+.ITEM
+\f(CWMod+Shift+E\fP \(en Exit PenticleWM
+.ITEM
+\f(CWMod+Control+Shift+E\fP \(en Restart PentileWM (Used after re-compiling)
+
+.HEADING 2 "Basic Programs"
+.LI
+.ITEM
+\f(CWMod+Shift+Enter\fP \(en Spawn terminal (the default terminal is \f(CWst\fP; run \f(CWman st\fP for more.)
+.ITEM
+\f(CWMod+v\fP \(en lf (file browser/manager)
+.ITEM
+\f(CWMod+e\fP \(en neomutt (email) \(en Must be first configured by running \f(CWmw add\fP.
+.ITEM
+\f(CWMod+m\fP \(en ncmpcpp (Music player)
+.ITEM
+\f(CWMod+c\fP \(en calcurse (Calender)
+.ITEM
+\f(CWMod+Control+Shift+H\fP \(en htop (system info)
+.ITEM
+\f(CWMod+g\fP \(en gotop (system info)
+.ITEM
+\f(CWMod+Shift+B\fP \(en bmon (bandwith monitor)
+.ITEM
+\f(CWMod+n\fP \(en newsboat (RSS feed reader)
+.ITEM
+\f(CWMod+w\fP \(en Web Browser
+.ITEM
+\f(CWMod+Shift+W\fP \(en nmtui (for connecting to wireless internet)
+.ITEM
+.LIST OFF
+.HEADING 2 "Scratch Pads"
+.PP
+Note on scratchpads: Scratchpads are certain programs that can be hidden and unhidden.
+You open/hide/unhide scratch pads with the same keybind.
+They appear in the middle of the screen, floating.
+Once you are done with it, press the keybind to hide it, when you need it back, press the keybind again, and it will appear again, right where you left off.
+If you don't need it anymore, you can close/kill it with the normal keybind.
+
+.LI
+.ITEM
+\f(CWMod+y\fP \(en Spawn terminal (the default terminal is \f(CWst\fP; run \f(CWman st\fP for more.)
+.ITEM
+\f(CWMod+u\fP \(en lf (file browser/manager)
+.ITEM
+\f(CWMod+i\fP \(en Web Browser
+.ITEM
+\f(CWMod+p\fP \(en PulseMixer (audio manager)
+.ITEM
+\f(CWMod+Shift+C\fP \(en bc (Calculator)
+.LIST OFF
+.HEADING 2 "System Management"
+.PP
+A good amount of system management can be done throught the command \f(CWsysact\fP.
+When \f(CWsysact\fP is ran, it will bring a dmenu menu with a few options. (renew pwm, shutdown, etc)
+\f(CWsysact\fP can be ran with an argument, if an argument is given, no dmenu menu will be given.
+For instance \f(CWsysact hibernate\fP will hibernate.
+The reason that we use this script, and not the straight commands is because this script will automatically detect what init system (systemd, runit, openrc) you are using, and use the proper command.
+
+.LI
+.ITEM
+\f(CWMod+Shift+L\fP \(en Lock screen and hibernate
+.ITEM
+\f(CWMod+Shift+Escape\fP \(en Runs sysact.
+.ITEM
+\f(CWMod+F1\fP \(en Shows this document
+.ITEM
+\f(CWMod+Shift+F1\fP \(en Toggle help pdf
+.ITEM
+\f(CWMod+F3\fP \(en Select screen/display to use
+.ITEM
+\f(CWMod+F4\fP \(en Hibernate (will ask to confirm)
+.ITEM
+\f(CWMod+F6\fP \(en transmission torrent client (cli)
+.ITEM
+\f(CWMod+F7\fP \(en Toggle on/off transmission client via dmenu
+.ITEM
+\f(CWMod+F8\fP \(en Update mail, if
+.PDF_WWW_LINK "https://github.com/lukesmithxyz/mutt-wizard" "mutt-wizard"
+is installed.
+.ITEM
+\f(CWMod+F9\fP \(en Mount a USB drive/hard drive or Android
+.ITEM
+\f(CWMod+F10\fP \(en Unmount a non-essential drive or Android
+.ITEM
+\f(CWMod+`\fP \(en Select an emoji to copy to clipboard
+.ITEM
+\f(CWMod+Insert\fP \(en Show contents of clipboard/primary selection
+.LIST OFF
+.HEADING 2 "Audio"
+.PP
+I use ncmpcpp as a music player, which is a front end for mpd.
+.LI
+.ITEM
+\f(CWMod+m\fP \(en ncmpcpp music player
+.ITEM
+\f(CWMod+.\fP \(en Next track
+.ITEM
+\f(CWMod+,\fP \(en Previous track
+.ITEM
+\f(CWMod+<\fP \(en Restart track
+.ITEM
+\f(CWMod+p\fP \(en Pause
+.ITEM
+\f(CWMod+M\fP \(en Mute all audio
+.ITEM
+\f(CWMod+-\fP \(en Decrease volume (holding shift increases amount)
+.ITEM
+\f(CWMod++\fP \(en Increase volume (holding shift increases amount)
+.ITEM
+\f(CWMod+[\fP \(en Back 10 seconds (holding shift increases amount)
+.ITEM
+\f(CWMod+]\fP \(en Forward 10 seconds (holding shift increases amount)
+.ITEM
+\f(CWMod+A\fP \(en pulsemixer (general volume sink/source control)
+.LIST OFF
+.HEADING 2 "Recording"
+.PP
+I use maim and ffmpeg to make different recordings of the desktop and audio.
+All of these recording shortcuts will output into \f(CW~\fP, and will not overwrite
+previous recordings as their names are based on their exact times.
+.LI
+.ITEM
+\f(CWMod+F12\fP \(en Take a screenshot
+.ITEM
+\f(CWMod+Shift+F12\fP \(en Select area to screenshot
+.ITEM
+\f(CWMod+r\fP \(en Opens dmenu menu to select kind of audio/video recording
+.ITEM
+\f(CWMod+Delete\fP \(en Kills any recording started in the above way.
+.ITEM
+\f(CWMod+Shift+c\fP \(en Toggles a webcam in the bottom right for screencasting.
+.ITEM
+.LIST OFF
+.HEADING 2 "Other buttons"
+.PP
+I've mapped those extra buttons that some keyboards have (play and pause
+buttons, screen brightness, email, web browsing buttons, etc.) to what you
+would expect.
+.HEADING 1 "Configuration"
+.PP
+Suckless programs, st (the terminal) and dmenu among others do not have traditional config files, but have their source code location in \f(CW~/.local/src/\fP.
+There you can modify their \f(CWconfig.h\fP files, then \f(CWsudo make install\fP to reinstall.
+(You'll have to restart the program to see its effects obviously.)
+.PP
+By default, mpd, the music daemon assumes that \f(CW~/Music\fP is your music directory.
+This can be changed in \f(CW~/.config/mpd/mpd.conf\fP.
+When you add music to your music folder, you may have to run \f(CWmpc up\fP in the terminal to update the database.
+mpd is controlled by ncmpcpp, which is accessible by \f(CWMod+m\fP.
+.HEADING 2 "Basic aliases"
+.LI
+.ITEM
+\f(CWp\fP \(en is a alias to \f(CWsudo pacman\fP

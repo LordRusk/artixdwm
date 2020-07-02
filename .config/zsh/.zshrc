@@ -64,7 +64,3 @@ source $HOME/.config/aliasrc
 
 # Load fast-syntax-highlighting; should be last.
 source ~/.local/src/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-
-# Bugmen set neofetch to show everytime they open their terminal...
-# We are not bugmen.
-#unix

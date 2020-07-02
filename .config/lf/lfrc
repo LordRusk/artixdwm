@@ -1,7 +1,7 @@
 # Rusk's lfrc
 
 # Basic settings
-set shell bash
+set shell dash
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
@@ -51,8 +51,6 @@ cmd open ${{
 #	esac
 #}}
 
-
-cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 
 cmd delete ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold

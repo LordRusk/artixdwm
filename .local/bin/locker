@@ -15,16 +15,24 @@
 pgrep screenkey >/dev/null 2>&1 && pkill screenkey
 
 # Variables
-dtitle="UNIX Is Very Simple"
-dtext=""
-dfigletfont="~/.local/share/kban.flf"
+dtitle="Fuck People"
+dtext="Be A Dick"
+dfigletfont=~/.local/share/kban.flf
 
 # Text manipulation
-title="$(printf "${1:-$dtitle}" | figlet -f ~/.local/share/kban.flf )"
+title="$(printf "${1:-$dtitle}" | figlet -f ${3:-$dfigletfont} )"
 text="$(printf "${2:-$dtext}")"
+
+# Kill programs that don't need to be ran while locked
+kill -9 `pidof dunst` `pidof crond` `pidof dwmblocks`
 
 # Lock the screen
 slock -m "$(printf "${title}\n${text}")"
+
+# Retart programs killed earlier
+setsid -f dunst
+setsid -f crond
+setsid -f dwmblocks
 
 # settings n stuff
 remaps &

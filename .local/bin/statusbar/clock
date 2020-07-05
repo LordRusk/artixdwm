@@ -1,8 +1,8 @@
 #!/bin/sh
 
-clock=$(date '+%I')
+# simple clock bar script
 
-case "$clock" in
+case "`date '+%I'`" in
 	"00") icon="🕛" ;;
 	"01") icon="🕐" ;;
 	"02") icon="🕑" ;;
@@ -26,4 +26,4 @@ case $BLOCK_BUTTON in
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-date "+%Y %b %d (%a) $icon%I:%M%p"
+date "+%Y %b %d (%a) $icon%H:%M"

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Simple Express VPN Module
+
+case $BLOCK_BUTTON in
+	1) [ "$(expressvpn status | head -n1 | cut -d' ' -f2)" = "to" ] && notify-send "disconnecting" && expressvpn disconnect && kill -$((34+21)) $(pidof dwmblocks) && exit || notify-send "Connecting..." && expressvpn connect && kill -$((34+21)) $(pidof dwmblocks) && exit ;;
+	2) notify-send "🙈🙉🙊 ExpressVPN Module" "\-Left Click Toggles VPN Conncection
+🔐: VPN Connected
+🔓: VPN Disconnected" ;
+
+esac
+
+[ "$(expressvpn status | head -n1 | cut -d' ' -f2)" = "to" ] && echo "🔐" || echo "🔓"

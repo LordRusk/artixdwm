@@ -6,6 +6,7 @@ set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
 set color256
+set info size:time
 set icons
 set period 1
 set drawbox
@@ -52,6 +53,8 @@ cmd open ${{
 #}}
 
 
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
 cmd delete ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
@@ -65,7 +68,7 @@ cmd moveto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	clear; echo "Move to where?"
-	dest="$(find /mnt $HOME | fzf | sed 's|~|$HOME|' )" &&
+	dest="$(find /mnt $HOME -type d | fzf | sed 's|~|$HOME|' )" &&
 	for x in $fx; do
 		eval mv -iv \"$x\" \"$dest\"
 	done &&
@@ -76,7 +79,7 @@ cmd copyto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	clear; echo "Copy to where?"
-	dest="$(find /mnt $HOME | fzf | sed 's|~|$HOME|' )" &&
+	dest="$(find /mnt $HOME -type d | fzf | sed 's|~|$HOME|' )" &&
 	for x in $fx; do
 		eval cp -ivr \"$x\" \"$dest\"
 	done &&

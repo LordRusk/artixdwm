@@ -140,6 +140,26 @@ In PenticleWM, the program dwmblocks controls what modules appear in the statusb
 \f(CWMod+Shift+W\fP \(en nmtui (for connecting to wireless internet)
 .ITEM
 .LIST OFF
+.HEADING 2 "Control Keys"
+.PP
+These keys are just helpful for manipulating the clipboard/primary, selecting emojis, etc.
+.LI
+.ITEM
+\f(CWMod+grave\fP \(en Open a dmenu menu of a emojis, select one and it will be copied to your clipboard.
+.ITEM
+\f(CWMod+insert\fP \(en Shows you whats in your selections.
+.ITEM
+\f(CWMod+Shift+Insert\fP \(en Switch whats in clipboard and primary.
+.ITEM
+\f(CWMod+Shift+I\fP \(en Run a speedtest.
+.ITEM
+\f(CWMod+Shift+R\fP \(en Restart a program.
+.ITEM
+\f(CWMod+Control+r\fP \(en Refresh a module on the statusbar.
+.ITEM
+\f(CWMod+Shift+H\fP \(en Choose how to handle a link from the clipboard or primary.
+.ITEM
+\f(CWMod+Control+h\fP \(en Run the default action on clipboard or primary.
 .HEADING 2 "Scratch Pads"
 .PP
 Note on scratchpads: Scratchpads are certain programs that can be hidden and unhidden.
@@ -262,3 +282,9 @@ mpd is controlled by ncmpcpp, which is accessible by \f(CWMod+m\fP.
 .LI
 .ITEM
 \f(CWp\fP \(en is a alias to \f(CWsudo pacman\fP
+.ITEM
+\f(CWvi\fP \(en is a alias to \f(CWnvim\fP which is the text editor.
+.ITEM
+\f(CWse\fP \(en is a script to search for a file to edit.
+.ITEM
+\f(CWscd\fP \(en is a script to search for a directory to \f(CWcd\fP to.

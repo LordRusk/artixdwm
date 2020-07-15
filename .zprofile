@@ -17,7 +17,7 @@ ulimit -c unlimited
 
 # Other global variables
 export WM="dwm"
-export LOCATION="
+export LOCATION="kennewick"
 
 # This is the list for lf icons:
 export LF_ICONS="di=📁:\

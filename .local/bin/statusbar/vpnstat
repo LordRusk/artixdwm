@@ -4,7 +4,7 @@
 # all of the vpn scripts.
 
 case $1 in
-	-express) vpnscript="expressvpn" ;;
+	-express) vpnscript="express" ;;
 	*) printf "Unknown vpn!\n"; exit ;;
 esac
 

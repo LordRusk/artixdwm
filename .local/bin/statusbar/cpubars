@@ -10,7 +10,7 @@ cache=/tmp/cpubarscache
 
 case $BLOCK_BUTTON in
 	1) setsid -f "$TERMINAL" -e htop ;;
-	2) notify-send "CPU load module" "Each bar represents
+	2) notify-send "🖥 CPU load module" "Each bar represents
 one CPU core";;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

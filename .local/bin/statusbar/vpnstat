@@ -5,7 +5,7 @@
 
 case $1 in
 	-express) vpnscript="express" ;;
-	*) printf "Unknown vpn!\n"; exit ;;
+	*) printf "Unknown vpn!\nCheck the script!\n"; exit ;;
 esac
 
 case $BLOCK_BUTTON in

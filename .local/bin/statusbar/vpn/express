@@ -3,7 +3,7 @@
 # Simple ExpressVpn sub-module
 
 case $1 in
-	-lc) printf "[ \"$(expressvpn status | head -n1 | cut -d' ' -f2)\" = \"to\" ] && notify-send \"disconnecting\" && expressvpn disconnect && kill -$((34+21)) $(pidof dwmblocks) && exit || notify-send \"Connecting...\" && expressvpn connect && kill -$((34+21)) $(pidof dwmblocks) && exit ;;"
+	-lc) [ "$(expressvpn status | head -n1 | cut -d' ' -f2)" = "to" ] && notify-send "disconnecting" && expressvpn disconnect && kill -$((34+21)) $(pidof dwmblocks) && exit || notify-send "Connecting..." && expressvpn connect && kill -$((34+21)) $(pidof dwmblocks) && exit ;;
 esac
 
 [ "$(expressvpn status | head -n1 | cut -d' ' -f2)" = "to" ] && echo "🔐" || echo "🔓"

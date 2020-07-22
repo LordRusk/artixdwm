@@ -1,18 +1,28 @@
 #!/bin/sh
 
-# Simple wrapper script for
-# all of the vpn scripts.
+# Simple vpn module built
+# for capatibility with simple
+# vpn specific subscripts.
 
-case $1 in
-	-express) vpnscript="express" ;;
-	*) printf "Unknown vpn!\nCheck the script!\n"; exit ;;
-esac
+# $1 is the subscript.
+
+# -lc = left click
+# -src = shift right click
+# -cmc = control middle click
+# etc, etc, etc
+
+[ -z $1 ] && printf "Error! No script specified!\n" && exit
 
 case $BLOCK_BUTTON in
-	1) $vpnscript -lc ;;
-	2) notify-send "🙈🙉🙊 VPN Module" "\-Left Click Toggles VPN Conncection
-🔐: VPN Connected
-🔓: VPN Disconnected" ;
+	1) $1 -lc ;;
+	2) $1 -mc ;;
+	3) $1 -rc ;;
+	4) $1 -slc ;;
+	5) $1 -smc ;;
+	6) $1 -src ;;
+	7) $1 -clc ;;
+	8) $1 -cmc ;;
+	9) $1 -crc ;;
 esac
 
-$vpnscript
+$1

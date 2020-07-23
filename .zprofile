@@ -13,6 +13,7 @@ export LOCKER="locker"
 # ~/ Clean-up
 export ZDOTDIR="$HOME/.config/zsh"
 export GOPATH="$HOME/.local/share/go"
+export GOBIN="$HOME/.local/share/go/bin"
 ulimit -c unlimited
 
 # Other global variables

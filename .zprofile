@@ -14,11 +14,12 @@ export LOCKER="locker"
 export ZDOTDIR="$HOME/.config/zsh"
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/share/go/bin"
+export LC_CTYPE="en_US.UTF-8"
 ulimit -c unlimited
 
 # Other global variables
 export WM="dwm"
-export LOCATION="kennewick"
+export LOCATION=""
 
 # This is the list for lf icons:
 export LF_ICONS="di=📁:\

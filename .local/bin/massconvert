@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# $1 = what to convert all files to. (i.E. mp3, opus, etc.)
+
+[ -z "$1" ] && printf "No file type given!\n" && exit 1
+
+cwd=`pwd`
+IFS=$'\n'
+
+for i in `ls $cwd`; do
+	[ -z "`echo \"$i\" | grep \.$1\$`" ] && {
+		ffmpeg -y -i "$i" "`echo \"$i\" | cut -d\. -f1`.$1" >/dev/null 2>&1 || printf "Error converting \"$i\"!\n"
+		rm "$i" >/dev/null 2>&1 || printf "Error removing old \"$i\"!\n"
+		printf "Finished converting $i\n"
+	}
+done

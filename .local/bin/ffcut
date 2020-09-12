@@ -20,7 +20,7 @@ input="$1"
 output="$2"
 cutcodes=$(sed 's/\s*#.*//g;/^$/d' "$3" | tr '\n' ';')
 cycles=$(cat $3 | wc -l)
-finaltime=$(ffmpeg -i $input 2>&1 | grep Duration | cut -d ' ' -f 4 | sed s/,//)
+finaltime=$(ffmpeg -i "$input" 2>&1 | grep Duration | cut -d ' ' -f 4 | sed s/,//)
 fts=1
 sts=2
 
@@ -29,24 +29,24 @@ sts=2
 printf "Cutting...\n"
 case $(echo $cutcodes | cut -d';' -f1 | cut -d' ' -f1 | tr -d ':') in
 	0*) ;;
-	*) ffmpeg -nostdin -y -i $input -to $(echo $cutcodes | cut -d';' -f 1 | cut -d' ' -f 1) -c:v copy -c:a copy 0.mkv || cuterror
+	*) ffmpeg -nostdin -y -i "$input" -to $(echo $cutcodes | cut -d';' -f 1 | cut -d' ' -f 1) -c:v copy -c:a copy 0.mkv || cuterror
 	echo "file 0.mkv" >> filelist ;;
-esac >/dev/null 2>&1
+esac
 
 while :; do
 	[ $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f2) = "end" ] && break || [ $sts = $((cycles+1)) ] && \
-		ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $finaltime -c:v copy -c:a copy $fts.mkv && \
+		ffmpeg -nostdin -y -i "$input" -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $finaltime $fts.mkv && \
 			echo "file $fts.mkv" >> filelist && break || \
-				ffmpeg -nostdin -y -i $input -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) -c:v copy -c:a copy $fts.mkv
+				ffmpeg -nostdin -y -i "$input" -ss $(echo $cutcodes | cut -d';' -f $fts | cut -d' ' -f 2) -to $(echo $cutcodes | cut -d';' -f $sts | cut -d' ' -f 1) $fts.mkv
 	echo "file $fts.mkv" >> filelist
 	fts=$((fts+1))
 	sts=$((sts+1))
-done >/dev/null 2>&1 || cuterror
+done || cuterror
 
-printf "Merging...\n"
+printf "Merging and Reencoding...\n"
 ffmpeg -f concat -i filelist -c copy -strict -2 $output >/dev/null 2>&1 || \
 	printf "Error merging...\nMake sure the output file is correctly named and file format is supported by ffmpeg.\n"
 
 printf "Removing leftover files...\n"
-rm $(cat filelist | sed "s/file //;s/'//g" | tr '\n' ' ') filelist >/dev/null 2>&1 || \
+rm $(cat filelist | sed "s/file //;s/'//g" | tr '\n' ' ') filelist || \
 	printf "Error removing leftover files...\nMake sure the script has proper permissions"

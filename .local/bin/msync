@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 
 loudsync() {
-	notify-send "Syncing Mail..."
+	notify-send "📬 Syncing Mail..."
 	mbsync -a
-	notify-send "Mail Synced"
-	ref -b
+	notify-send "📬 Mail Synced"
+	kill -$((34+12)) `pidof dwmblocks`
 }
 
 quitesync() {
 	mbsync -a
-	ref -b
+	kill -$((34+12)) `pidof dwmblocks`
 }
 
 case "$1" in

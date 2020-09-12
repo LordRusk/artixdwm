@@ -3,7 +3,7 @@
 # The clickable help menu. Middle click to restart wm.
 
 case $BLOCK_BUTTON in
-	1) groff -mom "${READMEFILE:-${XDG_DATA_HOME:-$HOME/.local/share}/help.mom}" -Tpdf | zathura - ;;
+	1) groff -mom "$HOME/.local/share/help.mom" -Tpdf | zathura - ;;
 	2) restartwm ;;
 	3) notify-send "❓ Help module" "\- Left click to open LARBS guide.
 - Middle click to refresh window manager." ;;

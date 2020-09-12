@@ -22,7 +22,8 @@ for battery in /sys/class/power_supply/BAT?; do
 		[ $capacity -le 100 ] && status=""
 		[ $capacity -le 80 ] && status=""
 		[ $capacity -le 60 ] && status=""
-		[ $capacity -le 30 ] && status="" && warn="❗"
+		[ $capacity -le 30 ] && status=""
+		[ $capacity -le 25 ] && warn="❗"
 		[ $capacity -le 10 ] && status=""; }
 
 	printf "%s%s%s%% " "$status" "$warn" "$capacity"

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Simple headphone check
+
+headphone-check > /dev/null
+if [ $? -eq 0 ]; then
+  echo "0"
+else
+  echo "1"
+fi
+

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Another locker script
+# I use somethimes that
+# showcases a dwmc use.
+
+# Spawn the image
+sxiv -b -f -s h ~/.local/wg/quotes/distorted-mountians-quote.png &
+# Kill cronjob manager, dwmblocks, dunst so I don't get any notifications, and sleep while image loads
+pkill crond & pkill dwmblocks & pkill dunst &
+# Lock the screen with slock
+slock
+# Kill the image
+pkill sxiv &
+# restart cron manager
+setsid crond & setsid dwmblocks & setsid dunst &
+# Update the time
+kill -$((34+1)) $(pidof dwmblocks) &

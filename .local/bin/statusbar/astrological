@@ -6,29 +6,8 @@
 
 # Dependencies: perl-libwww
 
-# Signs
-# -----
-# Aries
-# Cancer
-# Taurus
-# Leo
-# Gemini
-# Virgo
-# Libra
-# Capricorn
-# Scorpio
-# Aquarius
-# Sagittarius
-# Pisces
-
-# Possible Days
-# -------------
-# Yesterday
-# Today
-# Tomorrow
-
 # Variables
-sign="pisces"
+sign="Pisces"
 day="today"
 
 # Files
@@ -39,22 +18,22 @@ scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
 [ "$(stat -c %y "$moonfile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
 	{ curl -sf "wttr.in/?format=%m" > "$moonfile" || exit 1 ;}
 [ "$(stat -c %y "$scopefile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
-	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g;s/.,/./g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
+	{ GET "http://horoscope-api.herokuapp.com/horoscope/$day/$sign" | sed '1,2d;4,5d;s/\"//g;s/\",//g;s/\.,/\./g' | cut -d: -f 2 > "$scopefile" || exit 1 ;}
 
 # Horoscope stuff
 case "$sign" in
-	aries) sign="♈" ;;
-	cancer) sign="♋" ;;
-	taurus) sign="♉" ;;
-	leo) sign="♌" ;;
-	gemini) sign="♊" ;;
-	virgo) sign="♍" ;;
-	libra) sign="♎" ;;
-	capricorn) sign="♑" ;;
-	scorpio) sign="♏" ;;
-	aquarius) sign="♒" ;;
-	sagittarius) sign="♐" ;;
-	pisces) sign="♓" ;;
+	[Aa][Rr][Ii][Ee][Ss]) sign="♈" ;;
+	[Cc][Aa][Nn][Cc][Ee][Rr]) sign="♋" ;;
+	[Tt][Aa][Uu][Rr][Uu][Ss]) sign="♉" ;;
+	[Ll][Ee][Oo]) sign="♌" ;;
+	[Gg][Ee][Mm][Ii][Nn][Ii]) sign="♊" ;;
+	[Vv][Ii][Rr][Gg][Oo]) sign="♍" ;;
+	[Ll][Ii][Bb][Rr][Aa]) sign="♎" ;;
+	[Cc][Aa][Pp][Rr][Ii][Cc][Oo][Rr][Nn]) sign="♑" ;;
+	[Ss][Cc][Oo][Rr][Pp][Ii][Oo]) sign="♏" ;;
+	[Aa][Qq][Uu][Aa][Rr][Ii][Uu][Ss]) sign="♒" ;;
+	[Ss][Aa][Gg][Ii][Tt][Tt][Aa][Rr][Ii][Uu][Ss]) sign="♐" ;;
+	[Pp][Ii][Ss][Cc][Ee][Ss]) sign="♓" ;;
 esac
 
 # Clickable bar stuff
@@ -72,7 +51,7 @@ case $BLOCK_BUTTON in
 - Right Click shows different moon phases
 - Left Click shows Horoscope
 - Ctrl+Left click refreshes moonshpase and horoscope." ;;
-	3) notify-send -t 0 "Horoscope $sign:$(cat $scopefile)" ;;
+	3) notify-send -t 0 "$(sed "s/ /$sign:/" .local/share/scopefile)" ;;
 	8) rm $scopefile $moonfile && kill -$((34+18)) $(pidof dwmblocks) && exit ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Simple script that uses
+# youtubedr and dmenu to
+# make it extremely easy
+# to download youtube videos.
+
+mp="`find /mnt $HOME -type d | dmenu -i -p "Where would you like to download to?."`"
+[ -z "$mp" ] && exit 1
+if [ ! -d "$mp" ]; then
+	mkdiryn=`printf "No\\nYes" | dmenu -i -p "$mp does not exist. Create it?"`
+	[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
+fi
+
+notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtubedr -d "$mp" "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp" || notify-send " Error!" "Videos could not be downloaded!"

@@ -9,4 +9,4 @@ case $1 in
 🔓: VPN Disconnected" ;;
 esac
 
-[ "`expressvpn status | head -n1 | cut -d' ' -f2`" = "to" ] && echo "🔐" || echo 🔓""
+[ "`expressvpn status | head -n1 | cut -d' ' -f2`" = "to" ] && echo "🔐" || echo "🔓"

@@ -11,7 +11,7 @@
 
 updateicon() { \
 	echo "$1" > /tmp/recordingicon
-	kill -$((34+9)) $(pidof dwmblocks)
+	pkill -RTMIN+9 "${STATUSBAR:-dwmblocks}"
 	}
 
 killrecording() {
@@ -20,7 +20,7 @@ killrecording() {
 	kill -15 "$recpid"
 	rm -f /tmp/recordingpid
 	updateicon ""
-	kill -$((34+9)) $(pidof dwmblocks)
+	pkill -RTMIN+9 "${STATUSBAR:-dwmblocks}"
 	# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
 	sleep 3
 	kill -9 "$recpid"
@@ -36,9 +36,9 @@ screencast() { \
 	-f alsa -i default \
 	-r 30 \
  	-c:v h264 -crf 0 -preset ultrafast -c:a aac \
-	"$HOME/screencast-$(date '+%y%m%d-%H%M-%S').mkv" &
+	"$HOME/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
 	echo $! > /tmp/recordingpid
-	updateicon "⏺🎙"
+	updateicon "⏺️🎙️"
        	}
 
 video() { ffmpeg \
@@ -48,7 +48,7 @@ video() { ffmpeg \
  	-c:v libx264 -qp 0 -r 30 \
 	"$HOME/video-$(date '+%y%m%d-%H%M-%S').mkv" &
 	echo $! > /tmp/recordingpid
-	updateicon "⏺"
+	updateicon "⏺️"
 	}
 
 webcamhidef() { ffmpeg \
@@ -76,7 +76,7 @@ audio() { \
 	-c:a flac \
 	"$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
 	echo $! > /tmp/recordingpid
-	updateicon "🎙"
+	updateicon "🎙️"
 	}
 
 askrecording() { \

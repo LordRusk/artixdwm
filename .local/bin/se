@@ -2,4 +2,4 @@
 
 # Give user a fzf menu of specific needed
 # files and opens them in '$EDITOR' once picked.
-$EDITOR "$(find /mnt/ $HOME/.local/ $HOME/.config $HOME/repos -type f | fzf)"
+$EDITOR "$(find /mnt/ $HOME/.local/ $HOME/.config $HOME/repos -type f | fzf || exit)"

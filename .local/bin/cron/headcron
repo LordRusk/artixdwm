@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Simple script to mute the volume if
+# headphones get connected/disconnected.
+
+# var
+headstatefile="/tmp/headstate"
+
+# upate variable
+headphone-check > /dev/null
+
+# check if new variable is the same as saved state
+[ $(cat $headstatefile) != $? ] && pamixer -t && kill -$((34+10)) $(pidof dwmblocks)
+
+# update the saved state
+[ $? -eq 0 ] && printf 0 > /tmp/headstate || printf 1 > /tmp/headstate

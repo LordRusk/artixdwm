@@ -7,7 +7,7 @@
 path="$HOME/.local/src/dwmblocks/blocks.h"
 
 # Get all active blocks in an easily parcable format
-activeblocks="$(grep '{""' $path | sed 's/\/\*.*//g;/^$/d;s/"//g;s/,//g;s/{//g;s/}//g;s/ //g')"
+activeblocks="$(grep '{""' $path | sed 's/\/\*.*//g;/\/\//d;/^$/d;s/"//g;s/,//g;s/{//g;s/}//g;s/ //g')"
 
 # Prompt the user to select a module
 mod="$(echo "$activeblocks" | awk '{print $1}' | dmenu -l 10 -p "Which dwmblocks module would you like to refresh?")"

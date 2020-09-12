@@ -19,7 +19,7 @@ fi
 
 # Download the video
 cd $mp
-[ "$dlformat" = "Video+Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
-[ "$dlformat" = "Video" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl -x -f bestvideo/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
-[ "$dlformat" = "Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl -x -f bestaudio/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+[ "$dlformat" = "Video+Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl --add-metadata -i "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+[ "$dlformat" = "Video" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl --add-metadata -i -x -f bestvideo/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
+[ "$dlformat" = "Audio" ] && notify-send " Video(s) have started downloading" "Video(s) downloading to $mp" && youtube-dl --add-metadata -i -x -f bestaudio/best "$1" && notify-send " Video Finished Downloading!" "Video(s) finished downloading to $mp"
 

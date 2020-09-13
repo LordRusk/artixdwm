@@ -17,7 +17,7 @@ case $BLOCK_BUTTON in
 ❄: Daily low
 🌞: Daily high" ;;
 	3) geodoppler & ;;
-	8) rm $weatherreport && kill -$((34+5)) $(pidof dwmblocks) && exit ;;
+	8) rm $weatherreport && kill -$((34+5)) $(pidof goblocks) && exit ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

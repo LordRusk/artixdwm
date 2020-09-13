@@ -16,7 +16,7 @@ pgrep screenkey >/dev/null 2>&1 && pkill screenkey
 
 # Variables
 dtitle="Uriel Was Right"
-dtext="The problem is, you don't even know who that is"
+dtext="The problem is, you don't even know who that is."
 dfigletfont=~/.local/share/kban.flf
 
 # Text manipulation

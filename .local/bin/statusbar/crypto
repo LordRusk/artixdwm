@@ -18,7 +18,7 @@ getprices() { # The command to get the desired prices
 		val="$(curl -s "rate.sx/1$web")" &&
 		echo "$icon;$val;$human" > "$dir/$web"
 	done; [ -d "$dir" ] && touch "$dir"
-	kill -$((34+13)) $(pidof dwmblocks) ;} &
+	kill -$((34+13)) $(pidof goblocks) ;} &
 	exit
 	}
 

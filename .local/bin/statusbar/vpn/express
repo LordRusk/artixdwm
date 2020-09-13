@@ -3,7 +3,7 @@
 # Simple Expressvpn submodule.
 
 case $1 in
-	-lc) [ `cat /sys/class/net/w*/operstate` = "down" ] && notify-send "No Internet connection!" && exit || [ "`expressvpn status | head -n1 | cut -d' ' -f2`" = "to" ] && notify-send "disconnecting" && expressvpn disconnect && kill -$((34+21)) `pidof dwmblocks` && exit || notify-send "Connecting..." && expressvpn connect && kill -$((34+21)) `pidof dwmblocks` && exit ;;
+	-lc) [ `cat /sys/class/net/w*/operstate` = "down" ] && notify-send "No Internet connection!" && exit || [ "`expressvpn status | head -n1 | cut -d' ' -f2`" = "to" ] && notify-send "disconnecting" && expressvpn disconnect && kill -$((34+21)) `pidof goblocks` && exit || notify-send "Connecting..." && expressvpn connect && kill -$((34+21)) `pidof goblocks` && exit ;;
 	-mc) notify-send "🙈🙉🙊 ExpressVPN Module" "\-Left Click Toggles VPN Conncection
 🔐: VPN Connected
 🔓: VPN Disconnected" ;;

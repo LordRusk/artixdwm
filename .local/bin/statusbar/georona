@@ -26,7 +26,7 @@ case $BLOCK_BUTTON in
 🤢: New cases today
 ☠: Total deaths
 💀: New deaths today" ;;
-	8) rm "$cstats" "$countryfile" "$statefile" && kill -$((34+19)) `pidof dwmblocks` && exit ;;
+	8) rm "$cstats" "$countryfile" "$statefile" && kill -$((34+19)) `pidof goblocks` && exit ;;
 esac
 
 # get new info everyday

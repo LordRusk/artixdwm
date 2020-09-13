@@ -52,7 +52,7 @@ case $BLOCK_BUTTON in
 - Left Click shows Horoscope
 - Ctrl+Left click refreshes moonshpase and horoscope." ;;
 	3) notify-send -t 0 "$(sed "s/ /$sign:/" .local/share/scopefile)" ;;
-	8) rm $scopefile $moonfile && kill -$((34+18)) $(pidof dwmblocks) && exit ;;
+	8) rm $scopefile $moonfile && kill -$((34+18)) $(pidof goblocks) && exit ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

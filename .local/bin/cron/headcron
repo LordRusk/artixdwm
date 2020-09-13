@@ -10,7 +10,7 @@ headstatefile="/tmp/headstate"
 headphone-check > /dev/null
 
 # check if new variable is the same as saved state
-[ $(cat $headstatefile) != $? ] && pamixer -t && kill -$((34+10)) $(pidof dwmblocks)
+[ $(cat $headstatefile) != $? ] && pamixer -t && kill -$((34+10)) $(pidof goblocks)
 
 # update the saved state
 [ $? -eq 0 ] && printf 0 > /tmp/headstate || printf 1 > /tmp/headstate

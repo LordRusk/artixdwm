@@ -9,7 +9,7 @@ notify-send "📦 Repository Sync" "Checking for package updates..."
 sudo pacman -Syyuw --noconfirm || notify-send "Error downloading updates.
 
 Check your internet connection, if pacman is already running, or run update manually to see errors."
-kill -$((34+8)) $(pidof goblocks)
+kill -$((34+8)) $(pidof gocaudices)
 
 if pacman -Qu | grep -v "\[ignored\]"
 then

@@ -13,9 +13,9 @@ case $BLOCK_BUTTON in
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-unread="$(ls -l "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][Xx]/new/ | $(($(wc) -l)))"
+unread="$(ls -l "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][Xx]/new/ | wc -l)"
 
 icon="$(cat "/tmp/imapsyncicon_$USER" 2>/dev/null)"
 
-[ "$unread" = "0" ] && unread=""
-echo "📬 ${unread}${icon}"
+[ "$unread" = "1" ] && unread=""
+echo "📬 $((${unread}-1))${icon}"

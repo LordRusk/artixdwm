@@ -11,7 +11,7 @@
 
 ### STATUS BAR MODULES ###
 # Update mail and refresh the statusbar.
-*/2 * * * * mailsync; kill -$((34+12)) $(pidof goblocks)
+*/2 * * * * msync; kill -$((34+12)) $(pidof goblocks)
 
 # Check for new packages every 30 minutes
 */30 * * * * checkup

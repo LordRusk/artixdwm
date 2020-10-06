@@ -17,6 +17,6 @@ unread="$(ls -l "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][X
 
 icon="$(cat "/tmp/imapsyncicon_$USER" 2>/dev/null)"
 
-[ $unread = 1 ] && unread="" || $unread = $(($unread - 1))
+[ $unread = 1 ] && unread="" || unread=$(($unread - 1))
 
 echo "📬 ${unread}${icon}"

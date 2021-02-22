@@ -23,4 +23,4 @@
 * * * * * cronbat
 
 # Update the time every minute
-* * * * * kill -$((34+1)) $(pidof goblocks)
+* * * * * kill -$((34+1)) $(pidof gocaudices)

@@ -7,7 +7,7 @@ export TERMINAL="st"
 export READER="zathura"
 export FILE="lf"
 export BROWSER="surf"
-export STATUSBAR="dwmblocks"
+export STATUSBAR="gocaudices"
 export LOCKER="locker"
 
 # ~/ Clean-up

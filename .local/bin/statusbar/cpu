@@ -1,11 +1,11 @@
 #!/bin/sh
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) notify-send "🖥 CPU hogs" "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n(100% per core)" ;;
 	2) notify-send "🖥 CPU module " "\- Shows CPU temperature.
 - Click to show intensive processes.
-- Middle click to open htop." ;;
-	3) setsid -f "$TERMINAL" -e htop ;;
+- Right click to open gtop." ;;
+	3) setsid -f "$TERMINAL" -e gtop ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

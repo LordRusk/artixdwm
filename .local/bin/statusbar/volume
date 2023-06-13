@@ -3,11 +3,11 @@
 # Prints the current volume or 🔇 if muted. Uses PulseAudio by default,
 # uncomment the ALSA lines if you remove PulseAudio.
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) dwmc togglescratch 3 ;;
-	2) pamixer -t ;;
-	4) pamixer --allow-boost -i 1 ;;
-	5) pamixer --allow-boost -d 1 ;;
+	3) pamixer -t ;;
+	10) pamixer --allow-boost -i 1 ;;
+	11) pamixer --allow-boost -d 1 ;;
 	# 3) amixer sset Master toggle ;;
 	# 4) amixer sset Master 1%+ >/dev/null 2>&1 ;;
 	# 5) amixer sset Master 1%- >/dev/null 2>&1 ;;

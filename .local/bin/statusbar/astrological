@@ -11,8 +11,8 @@ sign="Pisces"
 day="today"
 
 # Files
-moonfile="${XDG_DATA_HOME:-$HOME/.local/share}/moonphase"
-scopefile="${XDG_DATA_HOME:-$HOME/.local/share}/scopefile"
+moonfile="$HOME/.local/share/moonphase"
+scopefile="$HOME/.local/share/scopefile"
 
 # Get new info everyday
 [ "$(stat -c %y "$moonfile" 2>/dev/null | cut -d' ' -f1)" = "$(date '+%Y-%m-%d')" ] ||
@@ -37,7 +37,7 @@ case "$sign" in
 esac
 
 # Clickable bar stuff
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) notify-send "🌜 Moon phass:
 - 🌑: New
 - 🌒: Waxing Crescent
@@ -50,7 +50,7 @@ case $BLOCK_BUTTON in
 	2) notify-send "Moon phase and horoscope" "\- Shows moon phase
 - Right Click shows different moon phases
 - Left Click shows Horoscope
-- Ctrl+Left click refreshes moonshpase and horoscope." ;;
+- Ctrl+Middle click refreshes moonshpase and horoscope." ;;
 	3) notify-send -t 0 "$(sed "s/ /$sign:/" .local/share/scopefile)" ;;
 	8) rm $scopefile $moonfile && kill -$((34+18)) $(pidof gocaudices) && exit ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;

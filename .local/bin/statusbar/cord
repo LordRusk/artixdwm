@@ -1,6 +1,6 @@
 #!/bin/sh
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) dwmc togglescratch 6 ;;
 	2) notify-send "💿 Discord statusbar module" "\- Left click toggles discord scratchpad" ;;
 esac

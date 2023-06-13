@@ -3,7 +3,7 @@
 # Loops through all batteries and puts
 # correct emoji/fa icon.
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	2) notify-send "🔋 Battery module" "🔋: discharging
 🛑: not charging
 ♻: stagnant charge

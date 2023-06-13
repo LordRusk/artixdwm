@@ -5,11 +5,11 @@
 # cronjob every so often as root. This script will then read those packages.
 # When clicked, it will run an upgrade via pacman.
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) dwmc togglescratch 4 ;;
 	2) notify-send "🎁 Upgrade module" "📦: number of upgradable packages
 - Left click to upgrade packages
-- Middle click to show upgradable packages" ;;
+- Right click to show upgradable packages" ;;
 	3) notify-send "$(pacman -Qqu)" ;;
 	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

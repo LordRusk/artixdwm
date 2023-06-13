@@ -13,7 +13,7 @@
 
 [ -z $1 ] && printf "Error! No script specified!\n" && exit
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) $1 -lc ;;
 	2) $1 -mc ;;
 	3) $1 -rc ;;

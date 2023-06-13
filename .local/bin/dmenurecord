@@ -11,7 +11,7 @@
 
 updateicon() { \
 	echo "$1" > /tmp/recordingicon
-	pkill -RTMIN+9 "${STATUSBAR:-gocaudices}"
+	kill -$((34+9)) `pidof gocaudices`
 	}
 
 killrecording() {
@@ -20,7 +20,7 @@ killrecording() {
 	kill -15 "$recpid"
 	rm -f /tmp/recordingpid
 	updateicon ""
-	pkill -RTMIN+9 "${STATUSBAR:-gocaudices}"
+	kill -$((34+9)) `pidof gocaudices`
 	# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
 	sleep 3
 	kill -9 "$recpid"

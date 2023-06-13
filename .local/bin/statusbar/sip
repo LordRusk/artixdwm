@@ -6,7 +6,7 @@
 
 infofile="/home/$USER/.local/share/ipinfo"
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) notify-send "$(head -n2 $infofile)" ;;
 	2) notify-send "ip module" "\-Left click shows you public and private ip addresses
 \- Right click opens a ip info file in less with tons of useful info" ;;

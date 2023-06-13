@@ -15,10 +15,10 @@ cstate=""
 # here you set whether the script will look for your
 # state or not. 0 means it look, 1 or anything else means
 # it will not. Should be set to 1 for people outside US.
-lfstate=0
+lfstate=1
 
 # bar stuff
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) setsid -f "$TERMINAL" -e less -Srf "$cstats" ;;
 	2) notify-send "Corona Virus Module" "\- Left click opens full report
 - Ctrl+Left click updates stats

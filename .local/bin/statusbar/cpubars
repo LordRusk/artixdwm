@@ -8,8 +8,8 @@
 # Cache in tmpfs to improve speed and reduce SSD load
 cache=/tmp/cpubarscache
 
-case $BLOCK_BUTTON in
-	1) setsid -f "$TERMINAL" -e htop ;;
+case $BUTTON in
+	1) setsid -f "$TERMINAL" -e gtop ;;
 	2) notify-send "🖥 CPU load module" "Each bar represents
 one CPU core";;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
@@ -29,15 +29,15 @@ echo "$stats" | while read -r row; do
 		printf "%d\n", (1 - (idle - $3)  / (total - $2))*100 /12.5}' \
 		id="$id" total="$total" idle="$idle")" in
 
-		"0") printf "▁";;
-		"1") printf "▂";;
-		"2") printf "▃";;
-		"3") printf "▄";;
-		"4") printf "▅";;
-		"5") printf "▆";;
-		"6") printf "▇";;
-		"7") printf "█";;
-		"8") printf "█";;
+		"0") printf "▁";printf " 0\n";;
+		"1") printf "▂";printf 1;;
+		"2") printf "▃";printf 2;;
+		"3") printf "▄";printf 3;;
+		"4") printf "▅";printf 4;;
+		"5") printf "▆";printf 5;;
+		"6") printf "▇";printf 6;;
+		"7") printf "█";printf 7;;
+		"8") printf "█";printf 8;;
 	esac
 done; printf "\\n"
 echo "$stats" > "$cache"

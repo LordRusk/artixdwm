@@ -45,7 +45,8 @@ case "$ext" in
 	rs) cargo build ;;
 	m) octave "$file" ;;
 	scad) openscad -o "$base".stl "$file" ;;
-	go) go mod tidy; go run "$file" ;;
+	# go) go mod tidy; go run "$file" ;;
+	go) go run "$file" ;;
 	sent) setsid -f sent "$file" 2>/dev/null ;;
 	*) sed 1q "$file" | grep "^#!/" | sed "s/^#!//" | xargs -r -I % "$file" ;;
 esac

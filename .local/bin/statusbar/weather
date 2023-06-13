@@ -6,13 +6,13 @@
 # If we have internet, get a weather report from wttr.in and store it locally.
 # You could set up a shell alias to view the full file in a pager in the
 # terminal if desired. This function will only be run once a day when needed.
-weatherreport="$HOME/.local/share/weatherreport"
+weatherreport="/home/rusk/.local/share/weatherreport"
 
-case $BLOCK_BUTTON in
+case $BUTTON in
 	1) setsid -f "$TERMINAL" -e less -Srf "$weatherreport" ;;
 	2) notify-send "🌈 Weather module" "\- Left click for full forecast.
 - Right click for doppler of current area.
-- Ctrl+Left click to update forecast.
+- Ctrl+Middle click to update forecast.
 ☔: Chance of rain/snow
 ❄: Daily low
 🌞: Daily high" ;;

@@ -3,10 +3,11 @@
 # This file runs when a DM logs you into a graphical session.
 # If you use startx/xinit like a Chad, this file will also be sourced.
 
-picom & # Start picom for transparency
+# picom & # Start picom for transparency
 dunst & # Start dunst for notifications
 unclutter & # Start unclutter to remove mouse when inactive
-setbg -N & # Set wallpaper using my hsetroot wrapper
+setbg -N -w ~/.local/wg/wallpaper.jpg & # Set wallpaper using my hsetroot wrapper
 remaps & # Switch caps and esc key among other things
 crond & # Scron used for cron jobs
-$STATUSBAR & # Starts the statusbar specified in .profile
+zara >> ~/.zaradump &
+# $STATUSBAR & # Starts the statusbar specified in .profile

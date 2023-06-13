@@ -3,7 +3,7 @@
 printf "Beginning upgrade.\\n"
 
 yay -Syu
-kill -$((34+8)) $(pidof gocaudices)
+kill -$((34+8)) $(pidof zara)
 
 printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
 read -r

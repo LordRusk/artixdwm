@@ -14,12 +14,17 @@ export LOCKER="locker"
 export ZDOTDIR="$HOME/.config/zsh"
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/share/go/bin"
+export GIT_TOKENNN="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"
+export GIT_PERTOKEN="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"
 export LC_CTYPE="en_US.UTF-8"
 ulimit -c unlimited
 
 # Other global variables
 export WM="dwm"
 export LOCATION=""
+export BOT_TOKEN="NzQwNzM4MzczMjE1NDUzMTg2.XytYXg.QhpKi8d_3k63QbxFI4_zgVYWhaI"
+export USER_TOKEN="NTcyMjkxMDU0OTQ3MTM5NTk2.XoA4tw.2Nh-tkBlcGgF0FRyqOPA8lIPXsw"
+export GIT_TOKWN="00edba741a1b96f83875c8a6cd82639f52b80c36"
 
 # This is the list for lf icons:
 export LF_ICONS="di=📁:\
